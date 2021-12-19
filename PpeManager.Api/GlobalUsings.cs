@@ -1,0 +1,13 @@
+﻿global using MediatR;
+global using System.Reflection;
+global using PpeManager.Api.Application.DTO;
+global using PpeManager.Domain.AggregatesModel.AggregatePpe;
+global using Autofac;
+global using Autofac.Extensions.DependencyInjection;
+global using PpeManager.Infrastructure.Idempotency;
+global using PpeManager.Api.Application.Commands;
+global using PpeManager.Api.Infrastructure.AutofacModules;
+global using Microsoft.AspNetCore.Mvc;
+global using MediatR.Pipeline;
+global using Flunt.Notifications;
+global using PpeManager.Api.Infrastructure;

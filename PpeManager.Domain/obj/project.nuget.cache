@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "wD2RS578UgNOiIvdJ5bQ5h1ryAA8ai2Tq+lYfOxPG0hW/KfjIOACkpn+NsfGL/xs3aaPsJBdX1wt4Blw5TNTVQ==",
+  "dgSpecHash": "6f7Zw7YqdlX9xU8ombNRUgNkpXnhZF6hrxjC/DjWl64IPBL0ZFmWSI9p8UGES2PL6AEXUbWeoNieXK9BnLl7SQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\IGOR-NOT\\Desktop\\CodigosSSD\\rufino-project\\back-end\\PpeManager\\PpeManager.Domain\\PpeManager.Domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\IGOR-NOT\\.nuget\\packages\\flunt\\2.0.5\\flunt.2.0.5.nupkg.sha512",
+    "C:\\Users\\IGOR-NOT\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

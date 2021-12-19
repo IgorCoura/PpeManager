@@ -1,0 +1,12 @@
+﻿global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using System.Threading.Tasks;
+global using Flunt.Notifications;
+global using System.Text.RegularExpressions;
+global using System.Reflection;
+global using MediatR;
+global using PpeManager.Domain.ValueTypes;
+global using PpeManager.Domain.Seedwork;
+global using Flunt.Validations;
