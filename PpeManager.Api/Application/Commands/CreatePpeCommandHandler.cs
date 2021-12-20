@@ -1,4 +1,6 @@
-﻿namespace PpeManager.Api.Application.Commands
+﻿using PpeManager.Domain.Exceptions;
+
+namespace PpeManager.Api.Application.Commands
 {
     public class CreatePpeCommandHandler : IRequestHandler<CreatePpeCommand, PpeDTO>
     {
@@ -19,7 +21,7 @@
             var entity = new Ppe(request.Name, request.Description);
             _notificationContext.AddNotifications(entity.Notifications);
             if (!_notificationContext.IsValid)
-                return default;
+                throw new PpeDomainException("Ppe is invalid");
 
             _ppeRepository.Add(entity);
 

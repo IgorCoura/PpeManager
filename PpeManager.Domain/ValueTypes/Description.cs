@@ -26,14 +26,24 @@ namespace PpeManager.Domain.ValueTypes
 
         private void Validate()
         {
-            if (string.IsNullOrWhiteSpace(_value))
+            if (string.IsNullOrWhiteSpace(_value)) 
+            {
                 AddNotification("Inform a valid description.");
+                return;
+            }               
 
             if (_value.Length < 5)
+            {
                 AddNotification("The description must have more than 5 chars.");
-
+                return;
+            }
+                
             if (Regex.IsMatch(_value, (@"[^a-zA-Z0-9]")))
+            {
                 AddNotification("The description must not have any special char.");
+                return;
+            }
+                
         }
 
         private void AddNotification(string message)

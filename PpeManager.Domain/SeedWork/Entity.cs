@@ -42,7 +42,7 @@ public abstract class Entity: Notifiable<Notification>
 
     public override bool Equals(object obj)
     {
-        if (obj == null || !(obj is Entity))
+        if (obj == null || obj is not Entity)
             return false;
 
         if (Object.ReferenceEquals(this, obj))
