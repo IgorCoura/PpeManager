@@ -1,6 +1,4 @@
-﻿using PpeManager.Domain.Exceptions;
-
-namespace PpeManager.Api.Application.Commands
+﻿namespace PpeManager.Api.Application.CreatePpeCommand.Commands
 {
     public class CreatePpeCommandHandler : IRequestHandler<CreatePpeCommand, PpeDTO>
     {
