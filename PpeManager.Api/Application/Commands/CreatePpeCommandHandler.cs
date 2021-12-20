@@ -4,26 +4,26 @@
     {
         private readonly IMediator _mediator;
         private readonly NotificationContext _notificationContext;
+        private readonly IPpeRepository _ppeRepository;
       
-        public CreatePpeCommandHandler(IMediator mediator, NotificationContext notificationContext)
+        public CreatePpeCommandHandler(IMediator mediator, NotificationContext notificationContext, IPpeRepository ppeRepository)
         {
             _mediator = mediator;
             _notificationContext = notificationContext;
+            _ppeRepository = ppeRepository;
         }
 
         public Task<PpeDTO> Handle(CreatePpeCommand request, CancellationToken cancellationToken)
         {
 
-            var model = new Ppe(request.Name, request.Description);
-            _notificationContext.AddNotifications(model.Notifications);
+            var entity = new Ppe(request.Name, request.Description);
+            _notificationContext.AddNotifications(entity.Notifications);
             if (!_notificationContext.IsValid)
                 return default;
 
-            //TODO: Insert PPE in repository.
+            _ppeRepository.Add(entity);
 
-
-
-            var dto = new PpeDTO(model.Id, model.Name.ToString(), model.Description.ToString());
+            var dto = new PpeDTO(entity.Id, entity.Name.ToString(), entity.Description.ToString());
             return Task.FromResult(dto);
 
         }

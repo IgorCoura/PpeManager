@@ -11,3 +11,4 @@ global using Microsoft.AspNetCore.Mvc;
 global using MediatR.Pipeline;
 global using Flunt.Notifications;
 global using PpeManager.Api.Infrastructure;
+global using PpeManager.Infrastructure.Repositories;

@@ -18,5 +18,9 @@ public class ApplicationModule: Autofac.Module
         builder.RegisterType<NotificationContext>()
             .InstancePerLifetimeScope();
 
+        builder.RegisterType<PpeRepository>()
+            .As<IPpeRepository>()
+            .InstancePerLifetimeScope();
+
     }
 }

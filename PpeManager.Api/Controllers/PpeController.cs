@@ -18,21 +18,11 @@ namespace PpeManager.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<PpeDTO>> CreatePpeAsync([FromBody] CreatePpeCommand createPpeCommand, [FromHeader(Name = "x-requestid")] string requestId)
         {
-            
-            /*
-            _logger.LogInformation(
-                "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                createOrderDraftCommand.GetGenericTypeName(),
-                nameof(createOrderDraftCommand.BuyerId),
-                createOrderDraftCommand.BuyerId,
-                createOrderDraftCommand);
-            */
-           
+                  
             try
             {
-                var id = Guid.NewGuid().ToString(requestId);
 
-                if (Guid.TryParse(id, out Guid guid) && guid != Guid.Empty)
+                if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
                 {
                     var identified = new IdentifiedCommand<CreatePpeCommand, PpeDTO>(createPpeCommand, guid);
 
