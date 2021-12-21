@@ -1,4 +1,6 @@
-﻿namespace PpeManager.Api.Infrastructure.AutofacModules;
+﻿using PpeManager.Api.Infrastructure.Services;
+
+namespace PpeManager.Api.Infrastructure.AutofacModules;
 
 public class ApplicationModule: Autofac.Module
 {
@@ -20,7 +22,14 @@ public class ApplicationModule: Autofac.Module
 
         builder.RegisterType<PpeRepository>()
             .As<IPpeRepository>()
+            .SingleInstance();
+
+        builder.RegisterType<ConsultApprovalCertificateNumberService>()
+            .As<IConsultApprovalCertificateNumberService>()
             .InstancePerLifetimeScope();
+
+        builder.RegisterType<HttpClient>()
+            .SingleInstance();
 
     }
 }

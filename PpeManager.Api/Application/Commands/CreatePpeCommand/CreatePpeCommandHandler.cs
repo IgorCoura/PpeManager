@@ -1,14 +1,12 @@
-﻿namespace PpeManager.Api.Application.CreatePpeCommand.Commands
+﻿namespace PpeManager.Api.Application.Command.CreatePpeCommand
 {
     public class CreatePpeCommandHandler : IRequestHandler<CreatePpeCommand, PpeDTO>
     {
-        private readonly IMediator _mediator;
         private readonly NotificationContext _notificationContext;
         private readonly IPpeRepository _ppeRepository;
       
-        public CreatePpeCommandHandler(IMediator mediator, NotificationContext notificationContext, IPpeRepository ppeRepository)
+        public CreatePpeCommandHandler(NotificationContext notificationContext, IPpeRepository ppeRepository)
         {
-            _mediator = mediator;
             _notificationContext = notificationContext;
             _ppeRepository = ppeRepository;
         }

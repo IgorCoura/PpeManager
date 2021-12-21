@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PpeManager.Domain.ValueTypes
 {
-    public record Description
+    public record ApprovalCertificate
     {
         private readonly string _value;
         public readonly Contract<Notification> contract;
 
-        private Description(string value)
+        private ApprovalCertificate(string value)
         {
             _value = value;
             contract = new Contract<Notification>();
@@ -21,35 +21,34 @@ namespace PpeManager.Domain.ValueTypes
         public override string ToString() =>
             _value;
 
-        public static implicit operator Description(string value) =>
-            new Description(value);
+        public static implicit operator ApprovalCertificate(string value) =>
+            new ApprovalCertificate(value);
 
         private void Validate()
         {
-            if (string.IsNullOrWhiteSpace(_value)) 
+            if (string.IsNullOrWhiteSpace(_value))
             {
-                AddNotification("Inform a valid description.");
+                AddNotification("Inform a valid Approval Certificate.");
                 return;
-            }               
+            }
 
-            if (_value.Length < 5)
+            if (_value.Length < 5 || _value.Length > 5)
             {
-                AddNotification("The description must have more than 5 chars.");
+                AddNotification("The Approval Certificate must have 5 digits.");
                 return;
             }
-                
-            if (Regex.IsMatch(_value, (@"[^a-zA-Z0-9]")))
+
+            if (Regex.IsMatch(_value, (@"[^0-9]")))
             {
-                AddNotification("The description must not have any special char.");
+                AddNotification("The Approval Certificate must have only numbers.");
                 return;
             }
-                
+
         }
 
         private void AddNotification(string message)
         {
-            contract.AddNotification(nameof(Description), message);
+            contract.AddNotification(nameof(ApprovalCertificate), message);
         }
-
     }
 }

@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "6tFE7D5OdDYrg4Fqm1DbtcEB8woB38506WFI/Zy6n4jqALKdxGsKEpVL3q6eNXD8QQMEQbeS3/SnmosOJFG4cw==",
+  "dgSpecHash": "J2KBFyiFzP74cKPpnhnneYELopT5UhdmWFDBdX+o2ox8byb1uHwq0cpvp40A3vQnOcD3c5KvGSfDmGuO4HFY7A==",
   "success": true,
   "projectFilePath": "C:\\Users\\IGOR-NOT\\Desktop\\CodigosSSD\\rufino-project\\back-end\\PpeManager\\PpeManager.Api\\PpeManager.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\autofac\\6.3.0\\autofac.6.3.0.nupkg.sha512",
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\autofac.extensions.dependencyinjection\\7.2.0\\autofac.extensions.dependencyinjection.7.2.0.nupkg.sha512",
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\flunt\\2.0.5\\flunt.2.0.5.nupkg.sha512",
+    "C:\\Users\\IGOR-NOT\\.nuget\\packages\\htmlagilitypack\\1.11.39\\htmlagilitypack.1.11.39.nupkg.sha512",
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.1\\microsoft.entityframeworkcore.6.0.1.nupkg.sha512",

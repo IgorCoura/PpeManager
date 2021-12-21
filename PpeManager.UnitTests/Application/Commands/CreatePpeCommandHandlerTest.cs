@@ -3,14 +3,12 @@
     public class CreatePpeCommandHandlerTest
     {
         private readonly Mock<IPpeRepository> _ppeRepositoryMock;
-        private readonly Mock<IMediator> _mediatorMock;
         private readonly Mock<NotificationContext> _notificationMock;
 
 
         public CreatePpeCommandHandlerTest()
         {
             _ppeRepositoryMock = new Mock<IPpeRepository>();
-            _mediatorMock = new Mock<IMediator>();
             _notificationMock = new Mock<NotificationContext>();
         }
 
@@ -25,15 +23,14 @@
             _ppeRepositoryMock.Setup(repo => repo.Add(It.IsAny<Ppe>())).Returns(entity);
 
             //Act
-            var handler = new CreatePpeCommandHandler(_mediatorMock.Object, _notificationMock.Object, _ppeRepositoryMock.Object);
+            var handler = new CreatePpeCommandHandler( _notificationMock.Object, _ppeRepositoryMock.Object);
             var cltToken = new System.Threading.CancellationToken();
             var result = await handler.Handle(fakeCommand, cltToken);
 
             //Asssert 
             Assert.True(_notificationMock.Object.IsValid);
-            Assert.Equal(expectedResult, result);
+            Assert.True(expectedResult.Equal(result));
         }
-
         [Fact]
         public async Task Hadler_return_PpeDomainException_if_ppe_is_invalid()
         {
@@ -41,7 +38,7 @@
             var fakeCommand = new CreatePpeCommand("", "");
 
             //Act
-            var handler = new CreatePpeCommandHandler(_mediatorMock.Object, _notificationMock.Object, _ppeRepositoryMock.Object);
+            var handler = new CreatePpeCommandHandler( _notificationMock.Object, _ppeRepositoryMock.Object);
             var cltToken = new System.Threading.CancellationToken();
 
             //Asssert 

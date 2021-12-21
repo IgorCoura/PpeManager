@@ -1,4 +1,4 @@
-﻿namespace PpeManager.Api.Application.CreatePpeCommand.Commands
+﻿namespace PpeManager.Api.Application.Command.CreatePpeCommand
 {
     public class CreatePpeCommand: IRequest<PpeDTO>
     {

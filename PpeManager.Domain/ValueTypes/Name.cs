@@ -1,6 +1,6 @@
 ﻿namespace PpeManager.Domain.ValueTypes
 {
-    public struct Name
+    public record Name
     {
         private readonly string _value;
         public readonly Contract<Notification> contract;
@@ -26,9 +26,9 @@
                 return;
             }                
 
-            if (_value.Length < 5)
+            if (_value.Length < 1)
             {
-                AddNotification("The name must have more than 5 chars.");
+                AddNotification("The name must have more than 1 chars.");
                 return;
             }                
 

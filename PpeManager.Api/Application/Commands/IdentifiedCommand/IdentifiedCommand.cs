@@ -1,4 +1,4 @@
-﻿namespace PpeManager.Api.Application.IdentifiedCommand.Commands
+﻿namespace PpeManager.Api.Application.Command.IdentifiedCommand
 {
     public class IdentifiedCommand<T, R>: IRequest<R> where T: IRequest<R>
     {

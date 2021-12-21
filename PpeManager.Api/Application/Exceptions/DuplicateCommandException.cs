@@ -1,4 +1,4 @@
-﻿namespace PpeManager.Api.Application.Exceptions.Commands
+﻿namespace PpeManager.Api.Application.Commands.Exceptions
 {
     public class DuplicateCommandException: Exception
     {

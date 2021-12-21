@@ -31,7 +31,7 @@ namespace PpeManager.Infrastructure.Repositories
 
         public virtual T Find(Predicate<T> p)
         {
-            return _list.Find(p);
+            return _list.Find(p)?? throw new ArgumentNullException(nameof(T)+" Not found");
         }
 
         public virtual IEnumerable<T> FindAll(Predicate<T> p)

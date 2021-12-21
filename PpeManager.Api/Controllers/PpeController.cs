@@ -1,5 +1,4 @@
-﻿
-namespace PpeManager.Api.Controllers
+﻿namespace PpeManager.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -40,6 +39,27 @@ namespace PpeManager.Api.Controllers
             }
 
             
+        }
+
+        [HttpPost("certification")]
+        public async Task<ActionResult<PpeDTO>> AddNewPpeCertification([FromBody] AddNewPpeCertificationCommand addNewCertificationCommnad, [FromHeader(Name = "x-requestid")] string requestId)
+        {
+            try{ 
+                if(Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+                {
+                    var identified = new IdentifiedCommand<AddNewPpeCertificationCommand, PpeDTO>(addNewCertificationCommnad, guid);
+
+                    return Created("/certification", await _mediator.Send(identified));
+                }
+                else
+                {
+                    return BadRequest("Invalid request Id");
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }
