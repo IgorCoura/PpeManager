@@ -1,6 +1,6 @@
 ﻿namespace PpeManager.Domain.Seedwork;
 
-public abstract class ValueObject
+public abstract class ValueObject: Notifiable<Notification>
 {
     protected static bool EqualOperator(ValueObject left, ValueObject right)
     {

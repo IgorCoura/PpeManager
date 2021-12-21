@@ -34,7 +34,7 @@
             int sum, rest;
 
             var value = _value.Trim();
-            value = _value.Replace(".", "").Replace("-", "");
+            value = value.Replace(".", "").Replace("-", "");
 
             if (value.Length != 11)
             {

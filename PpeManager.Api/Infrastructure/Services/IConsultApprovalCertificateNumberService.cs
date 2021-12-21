@@ -4,6 +4,6 @@ namespace PpeManager.Api.Infrastructure.Services
 {
     public interface IConsultApprovalCertificateNumberService
     {
-        DateTime ConsultValidity(ApprovalCertificate number);
+        DateOnly ConsultValidity(ApprovalCertificate number);
     }
 }

@@ -12,7 +12,7 @@ namespace PpeManager.Api.Infrastructure.Services
             client.Timeout = TimeSpan.FromSeconds(10);
         }
 
-        public DateTime ConsultValidity(ApprovalCertificate number)
+        public DateOnly ConsultValidity(ApprovalCertificate number)
         {
 
             if (!number.contract.IsValid)
@@ -23,7 +23,7 @@ namespace PpeManager.Api.Infrastructure.Services
                 {
                     message += m + "\n";
                 }
-                throw new Exception(message);
+                throw new ConsultApprovalCertificateNumberException(message);
             }
 
             try
@@ -38,23 +38,23 @@ namespace PpeManager.Api.Infrastructure.Services
                     var doc = html.DocumentNode;
                     var element = doc.Descendants(0).Where(n => n.HasClass("validade_ca"));
                     var text = element.Single().InnerText;
-                    if (DateTime.TryParse(text, out DateTime date))
+                    if (DateOnly.TryParse(text, out DateOnly date))
                     {
                         return date;
                     }
 
-                    throw new Exception("The validity is invalid");
+                    throw new ConsultApprovalCertificateNumberException("The validity is invalid");
 
 
                 }
                 else
                 {
-                    throw new Exception("Bad Request: It was not possible to check the validity of the number entered");
+                    throw new ConsultApprovalCertificateNumberException("Bad Request: It was not possible to check the validity of the number entered");
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message, ex);
+                throw new ConsultApprovalCertificateNumberException(ex.Message, ex);
             }
 
 
