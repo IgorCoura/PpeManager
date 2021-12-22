@@ -19,7 +19,7 @@
 
         public static PpeDTO FromEntity(Ppe ppe)
         {
-            return new PpeDTO(ppe.Id, ppe.Name.ToString(), ppe.Description.ToString(), ppe.ppeCertifications.Select(p => PpeCertificationDTO.FromEntity(p)).ToList());
+            return new PpeDTO(ppe.Id, ppe.Name.ToString(), ppe.Description.ToString(), ppe.PpeCertifications.Select(p => PpeCertificationDTO.FromEntity(p)).ToList());
         }
 
     }

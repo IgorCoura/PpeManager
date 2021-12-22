@@ -46,20 +46,25 @@
             
         }
 
+        public void setPpePossession(List<PpePossession> value)
+        {
+            PpePossessions = value;
+        }
+
 
         private Contract<Notification> ValidateRole(string role) =>
             new Contract<Notification>()
-                .IsNotNullOrEmpty(nameof(role), "Role not be null")
+                .IsNotNullOrEmpty(role, nameof(role), "Role not be null")
                 .IsLowerThan(0, role.Length, nameof(role), "Role must have more than one char");
 
         private Contract<Notification> ValidateRegistrationNumber(string registrationNumber) =>
             new Contract<Notification>()
-                .IsNotNullOrEmpty(nameof(registrationNumber), "Registration not be null")
+                .IsNotNullOrEmpty(registrationNumber, nameof(registrationNumber), "Registration not be null")
                 .IsLowerThan(0, registrationNumber.Length, nameof(registrationNumber), "Registration Number must have more than one char");
 
         private Contract<Notification> ValidateAdmissionDate(DateOnly admissionDate) =>
             new Contract<Notification>()
-                .IsNotNullOrEmpty(nameof(admissionDate), "Admssion Date not be null")
+                .IsNotNull(admissionDate, nameof(admissionDate), "Admssion Date not be null")
                 .IsLowerThan(DateTime.Now.AddYears(-100), admissionDate.ToDateTime(TimeOnly.MinValue), nameof(admissionDate), "Admission Date has an invalid date")
                 .IsGreaterThan(DateTime.Now.AddYears(100), admissionDate.ToDateTime(TimeOnly.MinValue), nameof(admissionDate), "Admission Date has an invalid date");
 

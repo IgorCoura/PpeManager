@@ -1,9 +1,4 @@
-﻿global using System;
-global using System.Collections.Generic;
-global using System.Linq;
-global using System.Text;
-global using System.Threading.Tasks;
-global using Flunt.Notifications;
+﻿global using Flunt.Notifications;
 global using System.Text.RegularExpressions;
 global using System.Reflection;
 global using MediatR;
@@ -13,3 +8,4 @@ global using Flunt.Validations;
 global using PpeManager.Domain.AggregatesModel.AggregatePpe;
 global using PpeManager.Domain.Exceptions;
 global using PpeManager.Domain.AggregatesModel.AggregateCompany;
+global using PpeManager.Domain.Events;

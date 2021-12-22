@@ -28,11 +28,11 @@
         private Contract<Notification> ValidateValidity(DateOnly validity) =>
             new Contract<Notification>()
                 .IsLowerThan(DateTime.Now, validity.ToDateTime(TimeOnly.MinValue), nameof(validity), "Validity has an invalid date")
-                .IsNotNullOrEmpty(nameof(validity), "Validity not be null");
+                .IsNotNull(validity, nameof(validity), "Validity not be null");
 
         private Contract<Notification> ValidateDurability(int durability) =>
             new Contract<Notification>()
-                .IsNotNullOrEmpty(nameof(durability), "Durability not be null")
+                .IsNotNull(durability, nameof(durability), "Durability not be null")
                 .IsLowerOrEqualsThan(0, durability, nameof(durability), "Durability must be greater than 0");
 
     }

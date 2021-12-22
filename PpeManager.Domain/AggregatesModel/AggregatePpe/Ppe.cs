@@ -4,7 +4,7 @@
     {
         public Name Name { get; }
         public Description Description { get; }
-        public IList<PpeCertification> ppeCertifications { get; }
+        public IList<PpeCertification> PpeCertifications { get; private set; }
         public Ppe(Name name, Description description)
         {
             AddNotifications(
@@ -15,17 +15,23 @@
             {
                 Name = name;
                 Description = description;
-                ppeCertifications = new List<PpeCertification>();
+                PpeCertifications = new List<PpeCertification>();
             }
 
            
         }
 
+        public void setPpeCertifications(IList<PpeCertification> list)
+        {
+            PpeCertifications = list;
+        }
+
+
         public void addNewPpeCertification(PpeCertification ppe)
         {
             if (ppe.IsValid)
             {
-                ppeCertifications.Add(ppe);
+                PpeCertifications.Add(ppe);
             }
             else
             {

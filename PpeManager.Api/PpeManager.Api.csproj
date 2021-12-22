@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Behaviors\" />
-    <Folder Include="Application\DomainEventHandlers\" />
   </ItemGroup>
 
 </Project>
