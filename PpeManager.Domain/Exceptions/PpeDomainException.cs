@@ -1,6 +1,6 @@
 ﻿namespace PpeManager.Domain.Exceptions
 {
-    public class PpeDomainException: Exception
+    public class PpeDomainException : Exception
     {
         public PpeDomainException() { }
 

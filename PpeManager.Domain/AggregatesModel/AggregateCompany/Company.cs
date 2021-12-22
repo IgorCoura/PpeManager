@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PpeManager.Domain.AggregatesModel.AggregateWorker
+﻿namespace PpeManager.Domain.AggregatesModel.AggregateCompany
 {
-    public class Company : ValueObject
+    public class Company : Entity, IAggregateRoot
     {
         public Company(Name name, Cnpj cnpj)
         {
@@ -23,10 +17,6 @@ namespace PpeManager.Domain.AggregatesModel.AggregateWorker
 
         public Name Name { get; private set; }
         public Cnpj Cnpj { get; private set; }
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Name;
-            yield return Cnpj;
-        }
+
     }
 }

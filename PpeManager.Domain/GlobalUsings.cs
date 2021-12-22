@@ -11,3 +11,5 @@ global using PpeManager.Domain.ValueTypes;
 global using PpeManager.Domain.Seedwork;
 global using Flunt.Validations;
 global using PpeManager.Domain.AggregatesModel.AggregatePpe;
+global using PpeManager.Domain.Exceptions;
+global using PpeManager.Domain.AggregatesModel.AggregateCompany;

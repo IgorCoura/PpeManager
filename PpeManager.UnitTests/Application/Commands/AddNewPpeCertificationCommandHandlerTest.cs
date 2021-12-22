@@ -23,7 +23,7 @@
             var entity = new Ppe("Ppe", "PpeDescription");
             var entityWithoutCertification = new Ppe("Ppe", "PpeDescription");
             entity.addNewPpeCertification(new PpeCertification(entity, fakeCommand.ApprovalCertificateNumber, DateOnly.MaxValue, fakeCommand.Durability));
-            var expectedResult = new PpeDTO(entity.Id, entity.Name.ToString(), entity.Description.ToString(), entity.ppeCertifications.Select(p => new PpeCertificationDTO(p.Id, p.ApprovalCertificateNumber.ToString(), p.Validity.ToString(), p.Durability)).ToList());
+            var expectedResult = PpeDTO.FromEntity(entity);
 
             _ppeRepositoryMock.Setup(repo => repo.Find(It.IsAny<Predicate<Ppe>>())).Returns(entityWithoutCertification);
             _ppeRepositoryMock.Setup(repo => repo.Update(It.IsAny<Ppe>())).Returns(entity);

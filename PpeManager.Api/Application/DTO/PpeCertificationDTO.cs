@@ -15,5 +15,10 @@
         public string Validity { get; private set; }
         public int Durability { get; private set; }
 
+        public static PpeCertificationDTO FromEntity(PpeCertification ppeCertification)
+        {
+            return new PpeCertificationDTO(ppeCertification.Id, ppeCertification.ApprovalCertificateNumber.ToString(), ppeCertification.Validity.ToString(), ppeCertification.Durability) ;
+        }
+
     }
 }

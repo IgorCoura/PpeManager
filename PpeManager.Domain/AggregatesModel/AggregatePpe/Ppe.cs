@@ -15,8 +15,10 @@
             {
                 Name = name;
                 Description = description;
+                ppeCertifications = new List<PpeCertification>();
             }
-            ppeCertifications = new List<PpeCertification>();
+
+           
         }
 
         public void addNewPpeCertification(PpeCertification ppe)

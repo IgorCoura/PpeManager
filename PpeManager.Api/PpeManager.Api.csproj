@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\Commands\AddNewPpeCertificationCommand\AddNewPpeCertificationCommandExceptionHandler.cs" />
+    <Compile Remove="Application\Commands\CreatePpeCommand\CreatePpeCommandExceptionHandler.cs" />
     <Compile Remove="Controllers\WeatherForecastController.cs" />
     <Compile Remove="Application\DTO\CreatePpeDTO.cs" />
   </ItemGroup>
@@ -32,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Behaviors\" />
+    <Folder Include="Application\DomainEventHandlers\" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,14 @@
 ﻿namespace PpeManager.Domain.AggregatesModel.AggregateWorker
 {
-    public class Worker: Entity
+    public class Worker: Entity, IAggregateRoot
     {
-        public Worker(Name name, string role, string registrationNumber, DateOnly admissionDate, Company company, IList<Ppe> ppes, IList<PpePossession>? ppePossessions = null)
+        public Worker(Name name, string role, string registrationNumber, DateOnly admissionDate,int companyId, IList<Ppe>? ppes = null, IList<PpePossession>? ppePossessions = null)
         {
             AddNotifications(
                 name.contract,
                 ValidateRole(role),
                 ValidateRegistrationNumber(registrationNumber),
-                ValidateAdmissionDate(admissionDate),
-                (Notifiable<Notification>)company.Notifications
+                ValidateAdmissionDate(admissionDate)
                 );
 
             if (IsValid)
@@ -18,8 +17,8 @@
                 Role = role;
                 RegistrationNumber = registrationNumber;
                 AdmissionDate = admissionDate;
-                Company = company;
-                Ppes = ppes;
+                CompanyId = companyId;
+                Ppes = ppes ?? new List<Ppe>();
                 PpePossessions = ppePossessions ?? new List<PpePossession>();
             }
         }
@@ -29,19 +28,34 @@
         public string RegistrationNumber { get; private set; }
         public DateOnly AdmissionDate { get; private set; }
         public Company Company { get; private set; }
+        private int CompanyId;
+        public int getCompanyId => CompanyId;
         public IList<Ppe> Ppes { get; private set; }
         public IList<PpePossession> PpePossessions { get; private set; }
+        
+
+        public void setCompany(Company company)
+        {
+            AddNotifications(
+                company.Notifications
+                );
+            if (IsValid)
+            {
+                Company = company;
+            }
+            
+        }
 
 
         private Contract<Notification> ValidateRole(string role) =>
             new Contract<Notification>()
                 .IsNotNullOrEmpty(nameof(role), "Role not be null")
-                .IsGreaterThan(0, role.Length, nameof(role), "Role must have more than one char");
+                .IsLowerThan(0, role.Length, nameof(role), "Role must have more than one char");
 
         private Contract<Notification> ValidateRegistrationNumber(string registrationNumber) =>
             new Contract<Notification>()
                 .IsNotNullOrEmpty(nameof(registrationNumber), "Registration not be null")
-                .IsGreaterThan(0, registrationNumber.Length, nameof(registrationNumber), "Registration Number must have more than one char");
+                .IsLowerThan(0, registrationNumber.Length, nameof(registrationNumber), "Registration Number must have more than one char");
 
         private Contract<Notification> ValidateAdmissionDate(DateOnly admissionDate) =>
             new Contract<Notification>()

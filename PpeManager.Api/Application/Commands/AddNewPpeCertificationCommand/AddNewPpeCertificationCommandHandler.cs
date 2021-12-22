@@ -16,10 +16,11 @@ namespace PpeManager.Api.Application.Commands.AddNewPpeCertificationCommand
 
         public Task<PpeDTO> Handle(AddNewPpeCertificationCommand request, CancellationToken cancellationToken)
         {
-            var ppeOld = _ppeRepository.Find(ppe => ppe.Id == request.PpeId);
+            
 
             var validity =  _consultApprovalCertificateNumberService.ConsultValidity(request.ApprovalCertificateNumber);
 
+            var ppeOld = _ppeRepository.Find(ppe => ppe.Id == request.PpeId);
             var ppeCertification = new PpeCertification(ppeOld, request.ApprovalCertificateNumber, validity , request.Durability);
             _notificationContext.AddNotifications(ppeCertification.Notifications);       
             
@@ -30,7 +31,7 @@ namespace PpeManager.Api.Application.Commands.AddNewPpeCertificationCommand
 
             var ppe = _ppeRepository.Update(ppeOld);
 
-            var dto = new PpeDTO(ppe.Id, ppe.Name.ToString(), ppe.Description.ToString(), ppe.ppeCertifications.Select(p => new PpeCertificationDTO(p.Id, p.ApprovalCertificateNumber.ToString(), p.Validity.ToString(), p.Durability)).ToList());
+            var dto = PpeDTO.FromEntity(ppe);
 
             return Task.FromResult(dto);
         }

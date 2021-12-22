@@ -18,7 +18,7 @@
             //Arrange
             var fakeCommand = new CreatePpeCommand("fakePpe", "FakeDescription");
             var entity = new Ppe(fakeCommand.Name, fakeCommand.Description);
-            var expectedResult = new PpeDTO(entity.Id, entity.Name.ToString(), entity.Description.ToString());
+            var expectedResult =PpeDTO.FromEntity(entity);  
 
             _ppeRepositoryMock.Setup(repo => repo.Add(It.IsAny<Ppe>())).Returns(entity);
 

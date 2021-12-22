@@ -17,5 +17,10 @@
 
         public bool Equal(PpeDTO entity) => Id == Id && Name == Name && Description == Description && PpeCertifications.SequenceEqual(entity.PpeCertifications);  
 
+        public static PpeDTO FromEntity(Ppe ppe)
+        {
+            return new PpeDTO(ppe.Id, ppe.Name.ToString(), ppe.Description.ToString(), ppe.ppeCertifications.Select(p => PpeCertificationDTO.FromEntity(p)).ToList());
+        }
+
     }
 }

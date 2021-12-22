@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PpeManager.Domain.AggregatesModel.AggregatePpe
 {
-    public interface IPpeRepository
+    public interface IPpeRepository: IRepository<Ppe>
     {
         public Ppe Add(Ppe entity);
 

@@ -19,9 +19,9 @@
             if (!_notificationContext.IsValid)
                 throw new PpeDomainException("Ppe is invalid");
 
-            _ppeRepository.Add(entity);
+            var entityResult = _ppeRepository.Add(entity);
 
-            var dto = new PpeDTO(entity.Id, entity.Name.ToString(), entity.Description.ToString());
+            var dto = PpeDTO.FromEntity(entityResult);
             return Task.FromResult(dto);
 
         }
