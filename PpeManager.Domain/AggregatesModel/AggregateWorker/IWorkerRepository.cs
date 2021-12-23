@@ -12,8 +12,8 @@ namespace PpeManager.Domain.AggregatesModel.AggregateWorker
 
         public Worker Update(Worker entity);
 
-        public Worker Find(Predicate<Worker> p);
+        public Worker Find(Func<Worker, bool> p);
 
-        public IEnumerable<Worker> FindAll(Predicate<Worker> p);
+        public IEnumerable<Worker> FindAll(Func<Worker, bool> p);
     }
 }

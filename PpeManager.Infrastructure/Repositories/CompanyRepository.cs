@@ -1,15 +1,46 @@
-﻿using PpeManager.Domain.AggregatesModel.AggregateCompany;
-using PpeManager.Domain.Seedwork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace PpeManager.Infrastructure.Repositories
 {
     public class CompanyRepository : TempRepository<Company>, ICompanyRepository
     {
-        public IUnitOfWork UnitOfWork => throw new NotImplementedException();
-    }
+        private readonly PpeManagerContext _context;
+
+        public CompanyRepository(PpeManagerContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        public IUnitOfWork UnitOfWork
+        {
+            get
+            {
+                return _context;
+            }
+        }
+        /*
+        public Company Add(Company entity)
+        {
+   
+            return _context.Company.Add(entity).Entity;
+     
+        }
+        public Company Update(Company entity)
+        {
+            return _context.Company.Update(entity).Entity;
+        }
+
+        public Company Find(Func<Company, bool> p)
+        {
+            var entity = _context.Company.Where(p).SingleOrDefault();
+            return entity;
+        }
+
+        public IEnumerable<Company> FindAll(Func<Company, bool> p)
+        {
+            var entity = _context.Company.Where(p);
+            return entity;
+        }
+
+        */
+    }   
 }

@@ -1,16 +1,9 @@
-﻿using PpeManager.Domain.Seedwork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace PpeManager.Infrastructure.Repositories
 {
     public class TempRepository<T> where T: Entity
     {
-        private List<T> _list = new List<T>();
-
+        List<T> _list = new List<T>();
         public TempRepository()
         {
 
@@ -29,14 +22,14 @@ namespace PpeManager.Infrastructure.Repositories
             return entity;
         }
 
-        public virtual T Find(Predicate<T> p)
+        public virtual T Find(Func<T, bool> p)
         {
-            return _list.Find(p)?? throw new ArgumentNullException(nameof(T)+" Not found");
+            return default;
         }
 
-        public virtual IEnumerable<T> FindAll(Predicate<T> p)
+        public virtual IEnumerable<T> FindAll(Func<T, bool> p)
         {
-            return _list.FindAll(p);
+            return default;
         }
 
 

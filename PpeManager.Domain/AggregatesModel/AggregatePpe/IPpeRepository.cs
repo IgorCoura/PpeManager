@@ -12,8 +12,8 @@ namespace PpeManager.Domain.AggregatesModel.AggregatePpe
 
         public Ppe Update(Ppe entity);         
 
-        public Ppe Find(Predicate<Ppe> p);
+        public Ppe Find(Func<Ppe, bool> p);
 
-        public IEnumerable<Ppe> FindAll(Predicate<Ppe> p);
+        public IEnumerable<Ppe> FindAll(Func<Ppe, bool> p);
     }
 }

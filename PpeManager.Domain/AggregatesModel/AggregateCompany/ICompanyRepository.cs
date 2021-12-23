@@ -12,8 +12,8 @@ namespace PpeManager.Domain.AggregatesModel.AggregateCompany
 
         public Company Update(Company entity);
 
-        public Company Find(Predicate<Company> p);
+        public Company Find(Func<Company, bool> p);
 
-        public IEnumerable<Company> FindAll(Predicate<Company> p);
+        public IEnumerable<Company> FindAll(Func<Company, bool> p);
     }
 }

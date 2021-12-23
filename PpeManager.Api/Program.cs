@@ -1,3 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+
+
+var config = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", optional: false)
+        .Build();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +15,19 @@ builder.Services.AddMvc(config =>
 {
     config.Filters.Add<NotificationFilter>();   
 });
+
+
+builder.Services.AddDbContext<PpeManagerContext>(options =>
+options.UseNpgsql("Server=192.168.15.34;Port=5432;Database=ppemanager;User Id=admin;Password=mysecretpassword;",
+npgsqlOptionsAction: sqlOptions =>
+{
+    sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null);
+}
+
+), ServiceLifetime.Scoped);
+
+
+
 
 // Call UseServiceProviderFactory on the Host sub property 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

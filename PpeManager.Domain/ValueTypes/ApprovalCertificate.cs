@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PpeManager.Domain.ValueTypes
 {
-    public record ApprovalCertificate
+    public struct ApprovalCertificate
     {
         private readonly string _value;
         public readonly Contract<Notification> contract;

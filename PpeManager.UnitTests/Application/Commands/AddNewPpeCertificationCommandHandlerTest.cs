@@ -22,11 +22,12 @@
             var fakeCommand = new AddNewPpeCertificationCommand(0, "31469", 5);
             var entity = new Ppe("Ppe", "PpeDescription");
             var entityWithoutCertification = new Ppe("Ppe", "PpeDescription");
-            entity.addNewPpeCertification(new PpeCertification(entity, fakeCommand.ApprovalCertificateNumber, DateOnly.MaxValue, fakeCommand.Durability));
+            entity.addNewPpeCertification(new PpeCertification(0, fakeCommand.ApprovalCertificateNumber, DateOnly.MaxValue, fakeCommand.Durability));
             var expectedResult = PpeDTO.FromEntity(entity);
 
-            _ppeRepositoryMock.Setup(repo => repo.Find(It.IsAny<Predicate<Ppe>>())).Returns(entityWithoutCertification);
+            _ppeRepositoryMock.Setup(repo => repo.Find(It.IsAny<Func<Ppe, bool>>())).Returns(entityWithoutCertification);
             _ppeRepositoryMock.Setup(repo => repo.Update(It.IsAny<Ppe>())).Returns(entity);
+            _ppeRepositoryMock.Setup(repo => repo.UnitOfWork.SaveEntitiesAsync(It.IsAny<CancellationToken>()));
             _serviceMock.Setup(s => s.ConsultValidity(It.IsAny<ApprovalCertificate>())).Returns(DateOnly.MaxValue);
 
             //Act
@@ -45,7 +46,7 @@
             var fakeCommand = new AddNewPpeCertificationCommand(0, "", -1);
             var entity = new Ppe("Ppe", "PpeDescription");
 
-            _ppeRepositoryMock.Setup(repo => repo.Find(It.IsAny<Predicate<Ppe>>())).Returns(entity);
+            _ppeRepositoryMock.Setup(repo => repo.Find(It.IsAny<Func<Ppe, bool>>())).Returns(entity);
             _serviceMock.Setup(s => s.ConsultValidity(It.IsAny<ApprovalCertificate>())).Returns(DateOnly.MinValue);
 
             //Act

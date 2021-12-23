@@ -23,7 +23,7 @@ namespace PpeManager.UnitTests.Domain.DomainHandler
             var notification = new SetValidityToPpePossession(0, 0);
 
             var ppe = new Ppe("Name", "Description");
-            var ppeCertification = new PpeCertification(ppe, "55555", DateOnly.FromDateTime(DateTime.Now.AddDays(10)), 5);
+            var ppeCertification = new PpeCertification(0, "55555", DateOnly.FromDateTime(DateTime.Now.AddDays(10)), 5);
             var listCertifications = new List<PpeCertification>();
             listCertifications.Add(ppeCertification);
             ppe.setPpeCertifications(listCertifications);
@@ -36,8 +36,8 @@ namespace PpeManager.UnitTests.Domain.DomainHandler
             var worker = new Worker("Name", "Role", "1234", DateOnly.FromDateTime(DateTime.Now), 5, listPpe, listPossession);
 
 
-            _ppeRepositoryMock.Setup(repo => repo.Find(It.IsAny<Predicate<Ppe>>())).Returns(ppe);
-            _workerRepositoryMock.Setup(repo => repo.Find(It.IsAny<Predicate<Worker>>())).Returns(worker);
+            _ppeRepositoryMock.Setup(repo => repo.Find(It.IsAny<Func<Ppe, bool>>())).Returns(ppe);
+            _workerRepositoryMock.Setup(repo => repo.Find(It.IsAny<Func<Worker, bool>>())).Returns(worker);
 
             //Act
             var handler = new SetValidityToPpePossessionHandler(_ppeRepositoryMock.Object, _workerRepositoryMock.Object, _notificationContextMock.Object);

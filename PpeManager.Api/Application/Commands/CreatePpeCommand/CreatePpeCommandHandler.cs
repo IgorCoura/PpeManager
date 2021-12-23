@@ -11,7 +11,7 @@
             _ppeRepository = ppeRepository;
         }
 
-        public Task<PpeDTO> Handle(CreatePpeCommand request, CancellationToken cancellationToken)
+        public async Task<PpeDTO> Handle(CreatePpeCommand request, CancellationToken cancellationToken)
         {
 
             var entity = new Ppe(request.Name, request.Description);
@@ -21,8 +21,11 @@
 
             var entityResult = _ppeRepository.Add(entity);
 
+            await _ppeRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+
             var dto = PpeDTO.FromEntity(entityResult);
-            return Task.FromResult(dto);
+          
+            return dto;
 
         }
 

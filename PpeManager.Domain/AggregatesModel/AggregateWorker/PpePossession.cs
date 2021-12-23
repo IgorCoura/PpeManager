@@ -2,12 +2,12 @@
 {
     public class PpePossession: Entity
     {
-        public Worker Worker { get; private set; }
-        public int getWorkerId => WorkerId;
-        private int WorkerId;      
-        public PpeCertification PpeCertification { get; private set; }
-        public int getPpeCertificationId => PpeCertificationId;
-        private int PpeCertificationId;
+        public virtual Worker Worker { get; private set; }
+        public int getWorkerId => _workerId;
+        private int _workerId;      
+        public virtual PpeCertification PpeCertification { get; private set; }
+        public int getPpeCertificationId => _ppeCertificationId;
+        private int _ppeCertificationId;
         public DateOnly DeliveryDate { get; private set; }
         public DateOnly Validity { get; private set; }
         public bool Confirmation { get; private set; } = false;
@@ -25,8 +25,8 @@
             {                
                 DeliveryDate = deliveryDate;              
                 Quantity = quantity;
-                WorkerId = workerId;
-                PpeCertificationId = ppeCertificationId;
+                _workerId = workerId;
+                _ppeCertificationId = ppeCertificationId;
             }
 
             EventSetValidity();
@@ -46,7 +46,7 @@
 
         public void EventSetValidity()
         {
-            AddDomainEvent(new SetValidityToPpePossession(Id, PpeCertificationId));
+            AddDomainEvent(new SetValidityToPpePossession(Id, _ppeCertificationId));
         }
 
         private Contract<Notification> ValidateQuantity(int quantity) =>

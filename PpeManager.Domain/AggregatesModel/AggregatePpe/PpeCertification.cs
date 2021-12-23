@@ -2,7 +2,7 @@
 {
     public class PpeCertification: Entity
     {
-        public PpeCertification(Ppe ppe, ApprovalCertificate approvalCertificateNumber, DateOnly validity, int durability)
+        public PpeCertification(int ppeId, ApprovalCertificate approvalCertificateNumber, DateOnly validity, int durability)
         {
             AddNotifications(
                 ValidateValidity(validity),
@@ -11,15 +11,16 @@
                 );
             if (IsValid)
             {
-                Ppe = ppe;
+                _ppeId = ppeId;
                 ApprovalCertificateNumber = approvalCertificateNumber;
                 Validity = validity;
                 Durability = durability;
             }
         }
 
-        public Ppe Ppe { get; private set; }
+        public virtual Ppe Ppe { get; private set; }
         private int _ppeId;
+        public int getPpeId => _ppeId;
         public ApprovalCertificate ApprovalCertificateNumber { get; private set; }
         public DateOnly Validity { get; private set; }
         public int Durability { get; private set; }

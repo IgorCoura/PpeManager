@@ -4,7 +4,7 @@
     {
         public Name Name { get; }
         public Description Description { get; }
-        public IList<PpeCertification> PpeCertifications { get; private set; }
+        public virtual IList<PpeCertification> PpeCertifications { get; private set; }
         public Ppe(Name name, Description description)
         {
             AddNotifications(

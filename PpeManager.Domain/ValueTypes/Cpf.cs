@@ -1,6 +1,6 @@
 ﻿namespace PpeManager.Domain.ValueTypes
 {
-    public record Cpf
+    public struct Cpf
     {
         private readonly string _value;
         public readonly Contract<Notification> contract;

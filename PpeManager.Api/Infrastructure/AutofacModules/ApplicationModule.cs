@@ -23,15 +23,15 @@ public class ApplicationModule: Autofac.Module
 
         builder.RegisterType<PpeRepository>()
             .As<IPpeRepository>()
-            .SingleInstance();
+            .InstancePerLifetimeScope();
 
         builder.RegisterType<CompanyRepository>()
             .As<ICompanyRepository>()
-            .SingleInstance();
+            .InstancePerLifetimeScope();
 
         builder.RegisterType<WorkerRepository>()
             .As<IWorkerRepository>()
-            .SingleInstance();
+            .InstancePerLifetimeScope();
 
         builder.RegisterType<ConsultApprovalCertificateNumberService>()
             .As<IConsultApprovalCertificateNumberService>()

@@ -17,3 +17,4 @@ global using PpeManager.Api.Controllers;
 global using PpeManager.Api.Application.Commands.AddNewPpeCertificationCommand;
 global using PpeManager.Api.Infrastructure.Services;
 global using PpeManager.Domain.ValueTypes;
+global using System.Threading;

@@ -17,3 +17,4 @@ global using PpeManager.Infrastructure.Repositories;
 global using PpeManager.Domain.Exceptions;
 global using PpeManager.Api.Application.Commands.AddNewPpeCertificationCommand;
 global using PpeManager.Domain.AggregatesModel.AggregateWorker;
+global using PpeManager.Infrastructure;

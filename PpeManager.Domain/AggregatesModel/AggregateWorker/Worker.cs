@@ -17,21 +17,26 @@
                 Role = role;
                 RegistrationNumber = registrationNumber;
                 AdmissionDate = admissionDate;
-                CompanyId = companyId;
+                _companyId = companyId;
                 Ppes = ppes ?? new List<Ppe>();
                 PpePossessions = ppePossessions ?? new List<PpePossession>();
             }
+        }
+
+        public Worker()
+        {
+
         }
 
         public Name Name { get; private set; }
         public string Role { get; private set; }
         public string RegistrationNumber { get; private set; }
         public DateOnly AdmissionDate { get; private set; }
-        public Company Company { get; private set; }
-        private int CompanyId;
-        public int getCompanyId => CompanyId;
-        public IList<Ppe> Ppes { get; private set; }
-        public IList<PpePossession> PpePossessions { get; private set; }
+        public virtual Company Company { get; private set; }
+        private int _companyId;
+        public int getCompanyId => _companyId;
+        public virtual IList<Ppe> Ppes { get; private set; }
+        public virtual IList<PpePossession> PpePossessions { get; private set; }
         
 
         public void setCompany(Company company)

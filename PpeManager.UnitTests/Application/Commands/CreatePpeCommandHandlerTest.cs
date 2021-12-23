@@ -21,6 +21,7 @@
             var expectedResult =PpeDTO.FromEntity(entity);  
 
             _ppeRepositoryMock.Setup(repo => repo.Add(It.IsAny<Ppe>())).Returns(entity);
+            _ppeRepositoryMock.Setup(repo => repo.UnitOfWork.SaveEntitiesAsync(It.IsAny<CancellationToken>()));
 
             //Act
             var handler = new CreatePpeCommandHandler( _notificationMock.Object, _ppeRepositoryMock.Object);
