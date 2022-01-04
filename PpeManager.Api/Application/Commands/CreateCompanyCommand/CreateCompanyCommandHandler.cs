@@ -13,7 +13,7 @@ namespace PpeManager.Api.Application.Commands.CreateCompanyCommand
             _companyRepository = companyRepository;
         }
 
-        public Task<CompanyDTO> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<CompanyDTO> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
         {
             var entity = new Company(request.Name, request.Cnpj);
             _notificationContext.AddNotifications(entity.Notifications);
@@ -24,8 +24,9 @@ namespace PpeManager.Api.Application.Commands.CreateCompanyCommand
 
             var entityResult = _companyRepository.Add(entity);
 
+            await _companyRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
-            return Task.FromResult(CompanyDTO.FromEntity(entityResult));
+            return CompanyDTO.FromEntity(entityResult);
         }
     }
 

@@ -6,7 +6,7 @@ global using Autofac;
 global using Autofac.Extensions.DependencyInjection;
 global using PpeManager.Infrastructure.Idempotency;
 global using PpeManager.Api.Application.Command.IdentifiedCommand;
-global using PpeManager.Api.Application.Commands.Exceptions;
+global using PpeManager.Api.Application.Exceptions;
 global using PpeManager.Api.Application.Command.CreatePpeCommand;
 global using PpeManager.Api.Infrastructure.AutofacModules;
 global using Microsoft.AspNetCore.Mvc;

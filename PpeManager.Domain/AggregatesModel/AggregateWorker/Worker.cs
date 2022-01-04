@@ -2,7 +2,7 @@
 {
     public class Worker: Entity, IAggregateRoot
     {
-        public Worker(Name name, string role, string registrationNumber, DateOnly admissionDate,int companyId, IList<Ppe>? ppes = null, IList<PpePossession>? ppePossessions = null)
+        public Worker(Name name, string role, string registrationNumber, DateOnly admissionDate,Company company, IList<Ppe>? ppes = null, IList<PpePossession>? ppePossessions = null)
         {
             AddNotifications(
                 name.contract,
@@ -17,7 +17,7 @@
                 Role = role;
                 RegistrationNumber = registrationNumber;
                 AdmissionDate = admissionDate;
-                _companyId = companyId;
+                Company = company;
                 Ppes = ppes ?? new List<Ppe>();
                 PpePossessions = ppePossessions ?? new List<PpePossession>();
             }

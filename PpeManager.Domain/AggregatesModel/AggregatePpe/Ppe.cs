@@ -1,10 +1,15 @@
-﻿namespace PpeManager.Domain.AggregatesModel.AggregatePpe
+﻿using PpeManager.Domain.AggregatesModel.AggregateWorker;
+
+namespace PpeManager.Domain.AggregatesModel.AggregatePpe
 {
     public class Ppe: Entity, IAggregateRoot
     {
         public Name Name { get; }
         public Description Description { get; }
         public virtual IList<PpeCertification> PpeCertifications { get; private set; }
+
+        public virtual IList<Worker> Workers { get; private set; }
+
         public Ppe(Name name, Description description)
         {
             AddNotifications(

@@ -31,7 +31,8 @@ namespace PpeManager.Infrastructure.Repositories
 
         public Ppe Find(Func<Ppe, bool> p)
         {
-            var entity = _context.Ppe.Where(p).SingleOrDefault() ?? throw new ArgumentNullException(nameof(Ppe));
+            var entity = _context.Ppe.FirstOrDefault(p) ?? throw new ArgumentException();
+            _context.Entry(entity).Collection(x => x.PpeCertifications).Load();
             return entity;
         }
 

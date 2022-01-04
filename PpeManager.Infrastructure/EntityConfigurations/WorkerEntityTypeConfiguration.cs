@@ -33,28 +33,16 @@ namespace PpeManager.Infrastructure.EntityConfigurations
 
             builder.HasOne(x => x.Company)
                 .WithMany()
-                .HasForeignKey("_companyId")
+                .HasForeignKey("CompanyId")
                 .IsRequired();
 
             builder.HasMany(x => x.PpePossessions)
-                .WithOne()
+                .WithOne(x => x.Worker)
                 .HasForeignKey("WorkerId")
                 .IsRequired();
 
             builder.HasMany(x => x.Ppes)
-                .WithMany("")
-                .UsingEntity<Dictionary<string, string>>
-                (
-                    "WorkersPpes",
-                    w => w.HasOne<Ppe>()
-                    .WithMany().
-                    HasForeignKey("PpeId")
-                    .HasConstraintName("FK_WorkersPpes_Ppes_PpeId"),
-                     w => w.HasOne<Worker>()
-                    .WithMany().
-                    HasForeignKey("WorkerId")
-                    .HasConstraintName("FK_WorkersPpes_Workers_WorkerId")
-                );
+                .WithMany(x => x.Workers);
 
         }
     }

@@ -2,7 +2,7 @@
 
 namespace PpeManager.Infrastructure.Repositories
 {
-    public class WorkerRepository : TempRepository<Worker>, IWorkerRepository
+    public class WorkerRepository : IWorkerRepository
     {
         private readonly PpeManagerContext _context;
 
@@ -18,7 +18,7 @@ namespace PpeManager.Infrastructure.Repositories
                 return _context;
             }
         }
-        /*
+        
         public Worker Add(Worker entity)
         {
 
@@ -41,6 +41,6 @@ namespace PpeManager.Infrastructure.Repositories
             var entity = _context.Worker.Where(p);
             return entity;
         }
-        */
+        
     }
 }

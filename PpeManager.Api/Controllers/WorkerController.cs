@@ -19,7 +19,16 @@ namespace PpeManager.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<WorkerDTO>> CreateWorkerAsync([FromBody] CreateWorkerCommand createWorkerCommand)
         {
-            return Created("", await _mediator.Send(createWorkerCommand));
+            try
+            {
+                var result = await _mediator.Send(createWorkerCommand);
+                return Created("", result );
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);  
+            }
+            
         }
     }
 }

@@ -20,7 +20,6 @@ namespace PpeManager.Infrastructure.EntityConfigurations
             builder.Property(x => x.SupportingDocument);
             builder.Property(x => x.Quantity);
 
-
             builder.HasOne(x => x.PpeCertification)
                 .WithMany()
                 .HasForeignKey("PpeCertificationId")

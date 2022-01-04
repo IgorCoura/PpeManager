@@ -8,11 +8,11 @@
         public bool HasActiveTransaction => _currentTransaction != null;
         private readonly IMediator? _mediator;
 
-       // public DbSet<Worker> Worker { get; set; }
+        public DbSet<Worker> Worker { get; set; }
         public DbSet<Ppe> Ppe { get; set; }
-        //public DbSet<Company> Company { get; set; }
+        public DbSet<Company> Company { get; set; }
         public DbSet<PpeCertification> PpeCertification { get; set; }
-       // public DbSet<PpePossession> PpePossession { get; set; }
+        public DbSet<PpePossession> PpePossession { get; set; }
 
 
         public PpeManagerContext(DbContextOptions<PpeManagerContext> options, IMediator mediator) : base(options)
@@ -24,11 +24,11 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
-            //modelBuilder.ApplyConfiguration(new PpeCertificationEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PpeEntityTypeConfiguration());
-            //modelBuilder.ApplyConfiguration(new PpePossessionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PpePossessionEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PpeCertificationEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new WorkerEntityTypeConfiguration());
 
         }
 

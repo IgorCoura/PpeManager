@@ -1,7 +1,7 @@
 ﻿
 namespace PpeManager.Infrastructure.Repositories
 {
-    public class CompanyRepository : TempRepository<Company>, ICompanyRepository
+    public class CompanyRepository : ICompanyRepository
     {
         private readonly PpeManagerContext _context;
 
@@ -17,7 +17,7 @@ namespace PpeManager.Infrastructure.Repositories
                 return _context;
             }
         }
-        /*
+        
         public Company Add(Company entity)
         {
    
@@ -41,6 +41,6 @@ namespace PpeManager.Infrastructure.Repositories
             return entity;
         }
 
-        */
+        
     }   
 }

@@ -1,19 +1,24 @@
-﻿namespace PpeManager.Api.Application.Commands.CreateWorkerCommand
+﻿using PpeManager.Domain.AggregatesModel.AggregateCompany;
+
+namespace PpeManager.Api.Application.Commands.CreateWorkerCommand
 {
     public class CreateWorkerCommandHandler : IRequestHandler<CreateWorkerCommand, WorkerDTO>
     {
         private readonly NotificationContext _notificationContext;
         private readonly IWorkerRepository _workerRepository;
+        private readonly ICompanyRepository _companyRepository;
 
-        public CreateWorkerCommandHandler(NotificationContext notificationContext, IWorkerRepository workerRepository)
+        public CreateWorkerCommandHandler(NotificationContext notificationContext, IWorkerRepository workerRepository, ICompanyRepository companyRepository)
         {
             _notificationContext = notificationContext;
             _workerRepository = workerRepository;
+            _companyRepository = companyRepository;
         }
 
-        public Task<WorkerDTO> Handle(CreateWorkerCommand request, CancellationToken cancellationToken)
+        public async Task<WorkerDTO> Handle(CreateWorkerCommand request, CancellationToken cancellationToken)
         {
-            var entity = new Worker(request.Name, request.Role, request.RegistrationNumber, DateOnly.Parse(request.AdmissionDate), request.CompanyId);
+            var company = _companyRepository.Find(x => x.Id == request.CompanyId);
+            var entity = new Worker(request.Name, request.Role, request.RegistrationNumber, DateOnly.FromDateTime(DateTime.Now), company);
             _notificationContext.AddNotifications(entity.Notifications);
             if (!_notificationContext.IsValid)
             {
@@ -22,7 +27,9 @@
 
             var entityResult = _workerRepository.Add(entity);
 
-            return Task.FromResult(WorkerDTO.FromEntity(entityResult));
+            await _workerRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+
+            return WorkerDTO.FromEntity(entityResult);
         }   
     }
 
