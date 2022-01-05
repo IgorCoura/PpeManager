@@ -17,7 +17,8 @@ namespace PpeManager.Infrastructure.EntityConfigurations
                 .IsRequired();
             builder.Property(x => x.Confirmation)
                 .IsRequired();
-            builder.Property(x => x.SupportingDocument);
+            builder.Property(x => x.SupportingDocument)
+                .IsRequired(false);
             builder.Property(x => x.Quantity);
 
             builder.HasOne(x => x.PpeCertification)

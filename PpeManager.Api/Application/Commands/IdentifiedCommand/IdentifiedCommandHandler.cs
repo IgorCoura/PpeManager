@@ -21,17 +21,16 @@
         public async Task<R> Handle(IdentifiedCommand<T, R> request, CancellationToken cancellationToken)
         {
             var alreadyExists = await _requestManager.ExistAsync(request.Id);
-            if (!alreadyExists)
+            if (alreadyExists)
             {
                 throw new DuplicateCommandException(nameof(request.Command)+" duplicate");
             }
             else
             {
-                var manager = _requestManager.CreateRequestForCommandAsync<T>(request.Id);
+                await _requestManager.CreateRequestForCommandAsync<T>(request.Id);
 
                 var result = await _mediator.Send(request.Command, cancellationToken);
 
-                manager.Wait();
 
                 return result;
             }

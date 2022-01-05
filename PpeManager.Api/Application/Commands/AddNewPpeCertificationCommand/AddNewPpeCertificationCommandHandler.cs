@@ -27,7 +27,7 @@ namespace PpeManager.Api.Application.Commands.AddNewPpeCertificationCommand
             if (!_notificationContext.IsValid)
                 throw new PpeDomainException();
 
-            ppeOld.addNewPpeCertification(ppeCertification);
+            ppeOld.addCertification(ppeCertification);
 
             var ppe = _ppeRepository.Update(ppeOld);
 

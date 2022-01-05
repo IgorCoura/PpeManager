@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PpeManager.Api.Application.Commands.ClosePpePossessionProcessCommand;
 using PpeManager.Api.Application.Commands.CreateWorkerCommand;
 
 namespace PpeManager.Api.Controllers
@@ -17,12 +18,21 @@ namespace PpeManager.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<WorkerDTO>> CreateWorkerAsync([FromBody] CreateWorkerCommand createWorkerCommand)
+        public async Task<ActionResult<WorkerDTO>> CreateWorkerAsync([FromBody] CreateWorkerCommand createWorkerCommand, [FromHeader(Name = "x-requestid")] string requestId)
         {
             try
             {
-                var result = await _mediator.Send(createWorkerCommand);
-                return Created("", result );
+                if(Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+                {
+                    var identified = new IdentifiedCommand<CreateWorkerCommand, WorkerDTO>(createWorkerCommand, guid);
+                    var result = await _mediator.Send(identified);
+                    return Created("", result);
+                }
+                else
+                {
+                    return BadRequest("Invalid request Id");
+                }
+
             }
             catch (Exception ex)
             {
@@ -30,5 +40,30 @@ namespace PpeManager.Api.Controllers
             }
             
         }
+
+        [HttpPost("upload")]
+        public async Task<ActionResult> getData([FromForm]IFormFile file,   [FromHeader(Name = "x-requestid")] string requestId)
+        {
+            try
+            {
+                if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+                {
+                    var command = new ClosePpePossessionProcessCommand(21, file);
+                    var identified = new IdentifiedCommand<ClosePpePossessionProcessCommand, bool>(command, guid);
+                    var result = await _mediator.Send(identified);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("Invalid request Id");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+  
     }
 }

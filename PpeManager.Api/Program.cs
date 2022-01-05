@@ -1,9 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
 
-var config = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json", optional: false)
-        .Build();
 
 var builder = WebApplication.CreateBuilder(args);
 

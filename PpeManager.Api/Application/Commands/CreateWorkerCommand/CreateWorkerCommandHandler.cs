@@ -18,7 +18,7 @@ namespace PpeManager.Api.Application.Commands.CreateWorkerCommand
         public async Task<WorkerDTO> Handle(CreateWorkerCommand request, CancellationToken cancellationToken)
         {
             var company = _companyRepository.Find(x => x.Id == request.CompanyId);
-            var entity = new Worker(request.Name, request.Role, request.RegistrationNumber, DateOnly.FromDateTime(DateTime.Now), company);
+            var entity = new Worker(request.Name, request.Role, request.Cpf, request.RegistrationNumber, request.AdmissionDate, company);
             _notificationContext.AddNotifications(entity.Notifications);
             if (!_notificationContext.IsValid)
             {

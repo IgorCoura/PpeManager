@@ -1,4 +1,5 @@
 ﻿using PpeManager.Api.Application.DomainEventHandlers;
+using PpeManager.Domain.AggregatesModel.AggregateCompany;
 using PpeManager.Domain.AggregatesModel.AggregateWorker;
 using PpeManager.Domain.Events;
 
@@ -30,10 +31,10 @@ namespace PpeManager.UnitTests.Domain.DomainHandler
 
             var listPpe = new List<Ppe>();
             listPpe.Add(ppe);
-            var ppePossession = new PpePossession(0, 0, DateOnly.FromDateTime(DateTime.Now), 5);
+            var ppePossession = new PpePossession(null, null, DateOnly.FromDateTime(DateTime.Now), 5);
             var listPossession = new List<PpePossession>(); 
             listPossession.Add(ppePossession);
-            var worker = new Worker("Name", "Role", "1234", DateOnly.FromDateTime(DateTime.Now), 5, listPpe, listPossession);
+            var worker = new Worker("Name", "Role", "092.444.670-62", "1234", DateOnly.FromDateTime(DateTime.Now).ToString(), new Company("Fake", "73.706.750/0001-57"), listPpe, listPossession);
 
 
             _ppeRepositoryMock.Setup(repo => repo.Find(It.IsAny<Func<Ppe, bool>>())).Returns(ppe);

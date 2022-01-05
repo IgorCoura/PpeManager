@@ -14,7 +14,7 @@
         public string SupportingDocument { get; set; } = "";
         public int Quantity { get; set; }
 
-        public PpePossession(int workerId, int ppeCertificationId, DateOnly deliveryDate, int quantity)
+        public PpePossession(Worker? worker, PpeCertification? ppeCertification, DateOnly deliveryDate, int quantity)
         {
             AddNotifications(
                 ValidateQuantity(quantity),
@@ -25,14 +25,15 @@
             {                
                 DeliveryDate = deliveryDate;              
                 Quantity = quantity;
-                _workerId = workerId;
-                _ppeCertificationId = ppeCertificationId;
+                Worker = worker;
+                PpeCertification = ppeCertification;
             }
 
             EventSetValidity();
             
         }
 
+        public PpePossession() { }
         public void setValidity(DateOnly value)
         {
             AddNotifications(

@@ -32,7 +32,9 @@ namespace PpeManager.Infrastructure.Repositories
 
         public Worker Find(Func<Worker, bool> p)
         {
-            var entity = _context.Worker.Where(p).SingleOrDefault()?? throw new ArgumentNullException(nameof(Worker));
+            var entity = _context.Worker.Include(x => x.Company).FirstOrDefault(p) ?? throw new ArgumentNullException(nameof(Worker));
+            _context.Entry(entity).Collection(i => i.Ppes).Load();
+            _context.Entry(entity).Collection(i => i.PpePossessions).Load();
             return entity;
         }
 

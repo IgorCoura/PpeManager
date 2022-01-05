@@ -1,6 +1,6 @@
 ﻿namespace PpeManager.Api.Application.Commands.AddNewPpePossessionCommand
 {
-    public class AddNewPpePossessionCommand: IRequest<PpePossessionDTO>
+    public class AddNewPpePossessionCommand: IRequest<WorkerDTO>
     {
         public AddNewPpePossessionCommand(int workerId, int ppeCertificationId, int quantity)
         {

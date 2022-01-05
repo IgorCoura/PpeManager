@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PpeManager.Infrastructure;
@@ -11,9 +12,10 @@ using PpeManager.Infrastructure;
 namespace PpeManager.Infrastructure.Migrations
 {
     [DbContext(typeof(PpeManagerContext))]
-    partial class PpeManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20220104185130_addCpfInWorker")]
+    partial class addCpfInWorker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,24 +35,6 @@ namespace PpeManager.Infrastructure.Migrations
 
             modelBuilder.HasSequence("workerseq", "ppemanager")
                 .IncrementsBy(10);
-
-            modelBuilder.Entity("Microsoft.eShopOnContainers.Services.Ordering.Infrastructure.Idempotency.ClientRequest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("requests", "ppemanager");
-                });
 
             modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregateCompany.Company", b =>
                 {
@@ -177,9 +161,6 @@ namespace PpeManager.Infrastructure.Migrations
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsOpenPpePossessionProcess")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()

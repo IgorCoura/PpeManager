@@ -32,6 +32,7 @@ namespace PpeManager.UnitTests.Application.Commands
             var expectedResult = new CompanyDTO(0 , entity.Name.ToString(), entity.Cnpj.ToString());
 
             _companyRepositoryMock.Setup(repo => repo.Add(It.IsAny<Company>())).Returns(entity);
+            _companyRepositoryMock.Setup(repo => repo.UnitOfWork.SaveEntitiesAsync(It.IsAny<CancellationToken>()));
 
             //Act
             var handler = new CreateCompanyCommandHandler(_notificationMock.Object, _companyRepositoryMock.Object);

@@ -7,7 +7,7 @@ global using Xunit;
 global using Moq;
 global using MediatR;
 global using PpeManager.Api.Application.Command.CreatePpeCommand;
-global using PpeManager.Api.Application.Commands.Exceptions;
+global using PpeManager.Api.Application.Exceptions;
 global using PpeManager.Api.Application.Command.IdentifiedCommand;
 global using PpeManager.Api.Application.DTO;
 global using PpeManager.Api.Infrastructure;

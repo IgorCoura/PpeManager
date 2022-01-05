@@ -32,7 +32,7 @@ namespace PpeManager.Domain.AggregatesModel.AggregatePpe
         }
 
 
-        public void addNewPpeCertification(PpeCertification ppe)
+        public void addCertification(PpeCertification ppe)
         {
             if (ppe.IsValid)
             {

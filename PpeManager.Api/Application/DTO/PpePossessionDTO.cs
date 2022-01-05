@@ -10,7 +10,7 @@
             Confirmation = confirmation;
             SupportingDocument = supportingDocument;
             Quantity = quantity;
-            id=id;
+            Id=id;
         }
         public int Id { get; private set; }
         public PpeCertificationDTO PpeCertification { get; private set; }

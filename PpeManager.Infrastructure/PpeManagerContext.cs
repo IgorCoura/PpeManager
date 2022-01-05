@@ -24,6 +24,7 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new ClientRequestEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PpeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PpePossessionEntityTypeConfiguration());

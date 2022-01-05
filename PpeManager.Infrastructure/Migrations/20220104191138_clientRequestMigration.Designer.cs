@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PpeManager.Infrastructure;
@@ -11,9 +12,10 @@ using PpeManager.Infrastructure;
 namespace PpeManager.Infrastructure.Migrations
 {
     [DbContext(typeof(PpeManagerContext))]
-    partial class PpeManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20220104191138_clientRequestMigration")]
+    partial class clientRequestMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,9 +179,6 @@ namespace PpeManager.Infrastructure.Migrations
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsOpenPpePossessionProcess")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()

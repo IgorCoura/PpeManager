@@ -23,6 +23,11 @@ namespace PpeManager.Infrastructure.EntityConfigurations
                 .HasConversion(x => x.ToString(), x => x)
                 .HasColumnName("Name")
                 .IsRequired();
+            builder.Property(x => x.Cpf)
+                .HasConversion(x => x.ToString(), x => x)
+                .IsRequired();
+            builder.Property(x => x.IsOpenPpePossessionProcess)
+                .IsRequired();
             builder.Property(x => x.RegistrationNumber)
                 .IsRequired();
             builder.Property(x => x.Role)
