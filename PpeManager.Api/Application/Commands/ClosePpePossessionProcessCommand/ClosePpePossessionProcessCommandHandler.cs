@@ -29,9 +29,20 @@
                     await formFile.CopyToAsync(stream);
                     stream.Flush(); 
                 }
+                
+                foreach(var p in worker.PpePossessions)
+                {
+                    if(p.Confirmation == false)
+                    {
+                        p.confirmation(true, filePath);
+                    }
+                }
 
-
+                _workerRepository.Update(worker);
             }
+
+            await _workerRepository.UnitOfWork.SaveEntitiesAsync();
+
             return true;
         }
     }

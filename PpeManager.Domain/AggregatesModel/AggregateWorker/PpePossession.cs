@@ -45,6 +45,12 @@
             }
         }
 
+        public void confirmation(bool confirmation, string filePath)
+        {
+            Confirmation = confirmation;
+            SupportingDocument = filePath;  
+        }
+
         public void EventSetValidity()
         {
             AddDomainEvent(new SetValidityToPpePossession(Id, _ppeCertificationId));
