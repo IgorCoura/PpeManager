@@ -11,7 +11,7 @@ public class MediatorModule : Autofac.Module
         builder.RegisterAssemblyTypes(typeof(CreatePpeCommand).GetTypeInfo().Assembly)
             .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-        
+
 
 
         builder.Register<ServiceFactory>(context =>

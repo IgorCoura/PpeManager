@@ -10,7 +10,7 @@
             Confirmation = confirmation;
             SupportingDocument = supportingDocument;
             Quantity = quantity;
-            Id=id;
+            Id = id;
         }
         public int Id { get; private set; }
         public PpeCertificationDTO PpeCertification { get; private set; }
@@ -22,7 +22,7 @@
 
         public static PpePossessionDTO FromEntity(PpePossession ppe)
         {
-            return new PpePossessionDTO(ppe.Id, PpeCertificationDTO.FromEntity(ppe.PpeCertification), ppe.DeliveryDate.ToString(), ppe.Validity.ToString(), ppe.Confirmation, ppe.SupportingDocument, ppe.Quantity);
+            return new PpePossessionDTO(ppe.Id, PpeCertificationDTO.FromEntity(ppe.PpeCertification), ppe.DeliveryDate.ToString(new CultureInfo("pt-BR")), ppe.Validity.ToString(new CultureInfo("pt-BR")), ppe.Confirmation, ppe.SupportingDocument, ppe.Quantity);
         }
 
     }

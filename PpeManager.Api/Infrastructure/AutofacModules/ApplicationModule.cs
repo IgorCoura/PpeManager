@@ -3,17 +3,19 @@ using PpeManager.Domain.AggregatesModel.AggregateCompany;
 
 namespace PpeManager.Api.Infrastructure.AutofacModules;
 
-public class ApplicationModule: Autofac.Module
+public class ApplicationModule : Autofac.Module
 {
+    private readonly string _queriesConnectionString;
 
-    public ApplicationModule()
+    public ApplicationModule(string queriesConnectionString)
     {
-
+        _queriesConnectionString = queriesConnectionString;
     }
+
+
 
     protected override void Load(ContainerBuilder builder)
     {
-
         builder.RegisterType<RequestManager>()
             .As<IRequestManager>()
             .InstancePerLifetimeScope();
@@ -31,13 +33,14 @@ public class ApplicationModule: Autofac.Module
 
         builder.RegisterType<WorkerRepository>()
             .As<IWorkerRepository>()
+            .As<IWorkerQueries>()
             .InstancePerLifetimeScope();
 
         builder.RegisterType<ConsultApprovalCertificateNumberService>()
             .As<IConsultApprovalCertificateNumberService>()
             .InstancePerLifetimeScope();
 
-        builder.RegisterType<HttpClient>()
+        builder.Register(x => new HttpClient() { Timeout = TimeSpan.FromSeconds(10) })
             .SingleInstance();
 
     }

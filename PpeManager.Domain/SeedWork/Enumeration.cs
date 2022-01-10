@@ -9,15 +9,17 @@ public abstract class Enumeration : IComparable
     protected Enumeration(int id, string name) => (Id, Name) = (id, name);
 
     public override string ToString() => Name;
-        
+
     public static IEnumerable<T> GetAll<T>() where T : Enumeration =>
         typeof(T).GetFields(BindingFlags.Public |
                             BindingFlags.Static |
                             BindingFlags.DeclaredOnly)
                     .Select(f => f.GetValue(null))
                     .Cast<T>();
-        
+
+#pragma warning disable CS8765 // A nulidade do tipo de parâmetro 'obj' não corresponde ao membro substituído (possivelmente devido a atributos de nulidade).
     public override bool Equals(object obj)
+#pragma warning restore CS8765 // A nulidade do tipo de parâmetro 'obj' não corresponde ao membro substituído (possivelmente devido a atributos de nulidade).
     {
         if (obj is not Enumeration otherValue)
         {
@@ -60,5 +62,7 @@ public abstract class Enumeration : IComparable
         return matchingItem;
     }
 
+#pragma warning disable CS8767 // A nulidade de tipos de referência no tipo de parâmetro 'other' de 'int Enumeration.CompareTo(object other)' não corresponde ao membro implementado implicitamente 'int IComparable.CompareTo(object? obj)' (possivelmente devido a atributos de nulidade).
     public int CompareTo(object other) => Id.CompareTo(((Enumeration)other).Id);
+#pragma warning restore CS8767 // A nulidade de tipos de referência no tipo de parâmetro 'other' de 'int Enumeration.CompareTo(object other)' não corresponde ao membro implementado implicitamente 'int IComparable.CompareTo(object? obj)' (possivelmente devido a atributos de nulidade).
 }

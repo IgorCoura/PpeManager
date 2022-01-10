@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PpeManager.Api.Application.Commands.CreateCompanyCommand;
+﻿using PpeManager.Api.Application.Commands.CreateCompanyCommand;
 
 namespace PpeManager.Api.Controllers
 {

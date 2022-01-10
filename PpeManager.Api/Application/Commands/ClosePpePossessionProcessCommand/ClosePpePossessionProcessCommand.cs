@@ -1,6 +1,6 @@
 ﻿namespace PpeManager.Api.Application.Commands.ClosePpePossessionProcessCommand
 {
-    public class ClosePpePossessionProcessCommand: IRequest<bool>
+    public class ClosePpePossessionProcessCommand : IRequest<bool>
     {
         public ClosePpePossessionProcessCommand(int workerId, IFormFile file)
         {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
-using PpeManager.Api.Infrastructure.Services;
+﻿using System.Net.Http;
 
 namespace PpeManager.UnitTests.Application.Services
 {
@@ -14,14 +8,14 @@ namespace PpeManager.UnitTests.Application.Services
 
         public ConsultApprovalCertificateNumberServiceTest()
         {
-            _client = new Mock<HttpClient>();   
+            _client = new Mock<HttpClient>();
         }
 
         [Fact]
         public void Consult_validity_with_valid_number()
         {
             var _service = new ConsultApprovalCertificateNumberService(_client.Object);
-            var validity =  _service.ConsultValidity("31469");
+            var validity = _service.ConsultValidity("31469");
             Assert.IsType<DateOnly>(validity);
         }
 

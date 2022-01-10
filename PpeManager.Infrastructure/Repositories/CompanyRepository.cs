@@ -17,12 +17,12 @@ namespace PpeManager.Infrastructure.Repositories
                 return _context;
             }
         }
-        
+
         public Company Add(Company entity)
         {
-   
+
             return _context.Company.Add(entity).Entity;
-     
+
         }
         public Company Update(Company entity)
         {
@@ -32,7 +32,9 @@ namespace PpeManager.Infrastructure.Repositories
         public Company Find(Func<Company, bool> p)
         {
             var entity = _context.Company.Where(p).SingleOrDefault();
+#pragma warning disable CS8603 // Possível retorno de referência nula.
             return entity;
+#pragma warning restore CS8603 // Possível retorno de referência nula.
         }
 
         public IEnumerable<Company> FindAll(Func<Company, bool> p)
@@ -41,6 +43,6 @@ namespace PpeManager.Infrastructure.Repositories
             return entity;
         }
 
-        
-    }   
+
+    }
 }

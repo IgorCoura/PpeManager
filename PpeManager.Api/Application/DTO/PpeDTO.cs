@@ -12,10 +12,10 @@
             Id = id;
             Name = name;
             Description = description;
-            PpeCertifications = ppeCertifications?? new List<PpeCertificationDTO>();
+            PpeCertifications = ppeCertifications ?? new List<PpeCertificationDTO>();
         }
 
-        public bool Equal(PpeDTO entity) => Id == Id && Name == Name && Description == Description && PpeCertifications.SequenceEqual(entity.PpeCertifications);  
+        public bool Equal(PpeDTO entity) => Id == Id && Name == Name && Description == Description && PpeCertifications.SequenceEqual(entity.PpeCertifications);
 
         public static PpeDTO FromEntity(Ppe ppe)
         {

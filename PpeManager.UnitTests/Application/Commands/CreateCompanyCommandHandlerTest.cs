@@ -1,10 +1,5 @@
 ﻿using PpeManager.Api.Application.Commands.CreateCompanyCommand;
 using PpeManager.Domain.AggregatesModel.AggregateCompany;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PpeManager.UnitTests.Application.Commands
 {
@@ -29,7 +24,7 @@ namespace PpeManager.UnitTests.Application.Commands
             //Arrange
             var fakeCommand = new CreateCompanyCommand("fakeCommand", "02624917000192");
             var entity = new Company(fakeCommand.Name, fakeCommand.Cnpj);
-            var expectedResult = new CompanyDTO(0 , entity.Name.ToString(), entity.Cnpj.ToString());
+            var expectedResult = new CompanyDTO(0, entity.Name.ToString(), entity.Cnpj.ToString());
 
             _companyRepositoryMock.Setup(repo => repo.Add(It.IsAny<Company>())).Returns(entity);
             _companyRepositoryMock.Setup(repo => repo.UnitOfWork.SaveEntitiesAsync(It.IsAny<CancellationToken>()));
@@ -51,7 +46,7 @@ namespace PpeManager.UnitTests.Application.Commands
 
 
             //Act
-            var handler = new CreateCompanyCommandHandler( _notificationMock.Object, _companyRepositoryMock.Object);
+            var handler = new CreateCompanyCommandHandler(_notificationMock.Object, _companyRepositoryMock.Object);
             var cltToken = new System.Threading.CancellationToken();
 
 

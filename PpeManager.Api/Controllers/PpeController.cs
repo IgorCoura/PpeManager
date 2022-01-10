@@ -17,7 +17,7 @@
         [HttpPost]
         public async Task<ActionResult<PpeDTO>> CreatePpeAsync([FromBody] CreatePpeCommand createPpeCommand, [FromHeader(Name = "x-requestid")] string requestId)
         {
-                  
+
             try
             {
 
@@ -31,21 +31,22 @@
                 {
                     return BadRequest("Invalid request Id");
                 }
-                
+
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            
+
         }
 
         [HttpPost("certification")]
         public async Task<ActionResult<PpeDTO>> AddNewPpeCertification([FromBody] AddNewPpeCertificationCommand addNewCertificationCommnad, [FromHeader(Name = "x-requestid")] string requestId)
         {
-            try{ 
-                if(Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+            try
+            {
+                if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
                 {
                     var identified = new IdentifiedCommand<AddNewPpeCertificationCommand, PpeDTO>(addNewCertificationCommnad, guid);
 
@@ -56,7 +57,7 @@
                     return BadRequest("Invalid request Id");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

@@ -4,7 +4,7 @@
     {
         private readonly NotificationContext _notificationContext;
         private readonly IPpeRepository _ppeRepository;
-      
+
         public CreatePpeCommandHandler(NotificationContext notificationContext, IPpeRepository ppeRepository)
         {
             _notificationContext = notificationContext;
@@ -24,7 +24,7 @@
             await _ppeRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
             var dto = PpeDTO.FromEntity(entityResult);
-          
+
             return dto;
 
         }

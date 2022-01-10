@@ -1,4 +1,4 @@
-﻿namespace PpeManager.Infrastructure.Idempotency 
+﻿namespace PpeManager.Infrastructure.Idempotency
 {
 
     public interface IRequestManager

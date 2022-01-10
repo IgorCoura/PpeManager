@@ -17,7 +17,7 @@
 
         public static PpeCertificationDTO FromEntity(PpeCertification ppeCertification)
         {
-            return new PpeCertificationDTO(ppeCertification.Id, ppeCertification.ApprovalCertificateNumber.ToString(), ppeCertification.Validity.ToString(), ppeCertification.Durability) ;
+            return new PpeCertificationDTO(ppeCertification.Id, ppeCertification.ApprovalCertificateNumber.ToString(), ppeCertification.Validity.ToString(new CultureInfo("pt-BR")), ppeCertification.Durability);
         }
 
     }

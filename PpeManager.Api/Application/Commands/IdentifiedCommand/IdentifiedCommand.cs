@@ -1,6 +1,6 @@
 ﻿namespace PpeManager.Api.Application.Command.IdentifiedCommand
 {
-    public class IdentifiedCommand<T, R>: IRequest<R> where T: IRequest<R>
+    public class IdentifiedCommand<T, R> : IRequest<R> where T : IRequest<R>
     {
         public T Command { get; private set; }
         public Guid Id { get; private set; }

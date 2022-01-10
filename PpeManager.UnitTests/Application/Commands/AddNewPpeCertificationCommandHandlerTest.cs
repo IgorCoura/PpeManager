@@ -11,7 +11,7 @@
         {
             _ppeRepositoryMock = new Mock<IPpeRepository>();
             _notificationMock = new Mock<NotificationContext>();
-            _serviceMock = new Mock<IConsultApprovalCertificateNumberService>();    
+            _serviceMock = new Mock<IConsultApprovalCertificateNumberService>();
 
         }
 

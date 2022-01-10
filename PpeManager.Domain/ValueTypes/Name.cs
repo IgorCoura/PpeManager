@@ -24,19 +24,14 @@
             {
                 AddNotification("Inform a valid name.");
                 return;
-            }                
+            }
 
             if (_value.Length < 1)
             {
                 AddNotification("The name must have more than 1 chars.");
                 return;
-            }                
+            }
 
-            if (Regex.IsMatch(_value, (@"[^a-zA-Z0-9]")))
-            {
-                AddNotification("The name must not have any special char.");
-                return;
-            }               
 
         }
 

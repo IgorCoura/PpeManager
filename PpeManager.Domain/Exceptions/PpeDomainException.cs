@@ -4,8 +4,8 @@
     {
         public PpeDomainException() { }
 
-        public PpeDomainException(string message): base(message) { }
+        public PpeDomainException(string message) : base(message) { }
 
-        public PpeDomainException(string message, Exception innerException): base(message, innerException) { }
+        public PpeDomainException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

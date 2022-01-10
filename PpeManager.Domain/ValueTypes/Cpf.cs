@@ -22,7 +22,7 @@
         {
             if (string.IsNullOrWhiteSpace(_value))
             {
-                AddNotification( "Is necessary to inform the CPF.");
+                AddNotification("Is necessary to inform the CPF.");
                 return;
             }
 
@@ -38,14 +38,15 @@
 
             if (value.Length != 11)
             {
-                AddNotification( "CPF should have 11 chars.");
+                AddNotification("CPF should have 11 chars.");
                 return;
             }
 
-            if (cpfInvalid.Contains(_value)) { 
-               AddNotification( "This CPF is invalid.");
-               return;
-                
+            if (cpfInvalid.Contains(_value))
+            {
+                AddNotification("This CPF is invalid.");
+                return;
+
             }
 
             aux = value.Substring(0, 9);
@@ -81,7 +82,7 @@
                 AddNotification("This CPF is invalid.");
         }
 
-        private void AddNotification( string message)
+        private void AddNotification(string message)
         {
             contract.AddNotification(nameof(Cpf), message);
         }

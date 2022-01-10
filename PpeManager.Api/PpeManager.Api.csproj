@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Remove="Application\Commands\AddNewPpeCertificationCommand\AddNewPpeCertificationCommandExceptionHandler.cs" />
     <Compile Remove="Application\Commands\CreatePpeCommand\CreatePpeCommandExceptionHandler.cs" />
+    <Compile Remove="Application\Queries\WorkerQueries.cs" />
     <Compile Remove="Controllers\WeatherForecastController.cs" />
     <Compile Remove="Application\DTO\CreatePpeDTO.cs" />
   </ItemGroup>
@@ -18,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.3.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.39" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
@@ -30,6 +32,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +42,8 @@
 
   <ItemGroup>
     <Folder Include="Application\Behaviors\" />
+    <Folder Include="Application\DomainEventHandlers\" />
+    <Folder Include="Application\Queries\" />
   </ItemGroup>
 
 </Project>

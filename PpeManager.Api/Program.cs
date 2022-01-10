@@ -10,12 +10,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvc(config =>
 {
-    config.Filters.Add<NotificationFilter>();   
+    config.Filters.Add<NotificationFilter>();
 });
 
 
+
 builder.Services.AddDbContext<PpeManagerContext>(options =>
-options.UseNpgsql("Server=192.168.15.34;Port=5432;Database=ppemanager;User Id=admin;Password=mysecretpassword;",
+options.UseNpgsql(builder.Configuration["ConnectionString"],
 npgsqlOptionsAction: sqlOptions =>
 {
     sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null);
@@ -30,10 +31,10 @@ npgsqlOptionsAction: sqlOptions =>
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 // Call ConfigureContainer on the Host sub property 
-builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+builder.Host.ConfigureContainer<ContainerBuilder>(b =>
 {
-    builder.RegisterModule(new ApplicationModule());
-    builder.RegisterModule(new MediatorModule());
+    b.RegisterModule(new ApplicationModule(builder.Configuration["ConnectionString"]));
+    b.RegisterModule(new MediatorModule());
 });
 
 

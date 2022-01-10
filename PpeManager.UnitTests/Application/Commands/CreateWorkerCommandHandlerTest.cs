@@ -1,11 +1,6 @@
 ﻿using PpeManager.Api.Application.Commands.CreateWorkerCommand;
 using PpeManager.Domain.AggregatesModel.AggregateCompany;
 using PpeManager.Domain.AggregatesModel.AggregateWorker;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PpeManager.UnitTests.Application.Commands
 {
@@ -32,8 +27,8 @@ namespace PpeManager.UnitTests.Application.Commands
             //Arrange
             var fakeCommand = new CreateWorkerCommand("fakeCommand", "role", "092.444.670-62", "12345", "12/12/12", 0);
             var company = new Company("fakeCommand", "73.706.750/0001-57");
-            var entity = new Worker(fakeCommand.Name, fakeCommand.Role, fakeCommand.Cpf, fakeCommand.RegistrationNumber ,DateOnly.Parse(fakeCommand.AdmissionDate).ToString(), company);
-            var expectedResult = WorkerDTO.FromEntity(entity);  
+            var entity = new Worker(fakeCommand.Name, fakeCommand.Role, fakeCommand.Cpf, fakeCommand.RegistrationNumber, DateOnly.Parse(fakeCommand.AdmissionDate).ToString(), company);
+            var expectedResult = WorkerDTO.FromEntity(entity);
 
             _workerRepositoryMock.Setup(repo => repo.Add(It.IsAny<Worker>())).Returns(entity);
             _companyRepositoryMock.Setup(repo => repo.Find(It.IsAny<Func<Company, bool>>())).Returns(company);
@@ -53,7 +48,7 @@ namespace PpeManager.UnitTests.Application.Commands
         public async Task Hadler_return_WorkerDomainException_if_worker_is_invalid()
         {
             //Arrange
-            var fakeCommand = new CreateWorkerCommand("", "","","","12/12/12",-1);
+            var fakeCommand = new CreateWorkerCommand("", "", "", "", "12/12/12", -1);
 
 
             //Act

@@ -1,6 +1,6 @@
 ﻿namespace PpeManager.Domain.Seedwork;
 
-public abstract class Entity: Notifiable<Notification>
+public abstract class Entity : Notifiable<Notification>
 {
     int? _requestedHashCode;
     int _Id;
@@ -16,8 +16,12 @@ public abstract class Entity: Notifiable<Notification>
         }
     }
 
+#pragma warning disable CS8618 // O campo não anulável '_domainEvents' precisa conter um valor não nulo ao sair do construtor. Considere declarar o campo como anulável.
     private List<INotification> _domainEvents;
+#pragma warning restore CS8618 // O campo não anulável '_domainEvents' precisa conter um valor não nulo ao sair do construtor. Considere declarar o campo como anulável.
+#pragma warning disable CS8603 // Possível retorno de referência nula.
     public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
+#pragma warning restore CS8603 // Possível retorno de referência nula.
 
     public void AddDomainEvent(INotification eventItem)
     {
@@ -40,7 +44,9 @@ public abstract class Entity: Notifiable<Notification>
         return this.Id == default(Int32);
     }
 
+#pragma warning disable CS8765 // A nulidade do tipo de parâmetro 'obj' não corresponde ao membro substituído (possivelmente devido a atributos de nulidade).
     public override bool Equals(object obj)
+#pragma warning restore CS8765 // A nulidade do tipo de parâmetro 'obj' não corresponde ao membro substituído (possivelmente devido a atributos de nulidade).
     {
         if (obj == null || obj is not Entity)
             return false;

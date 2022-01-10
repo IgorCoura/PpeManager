@@ -3,7 +3,7 @@ using Microsoft.eShopOnContainers.Services.Ordering.Infrastructure.Idempotency;
 
 namespace PpeManager.Infrastructure.Idempotency
 {
-    public class RequestManager: IRequestManager
+    public class RequestManager : IRequestManager
     {
         private readonly PpeManagerContext _context;
 
@@ -15,16 +15,18 @@ namespace PpeManager.Infrastructure.Idempotency
 
         public async Task<bool> ExistAsync(Guid id)
         {
-            
+
             var request = await _context.
                 FindAsync<ClientRequest>(id);
 
-            return request != null;            
+            return request != null;
         }
 
         public async Task CreateRequestForCommandAsync<T>(Guid id)
         {
-            
+            var aa = DateTime.UtcNow.AddDays(8) > DateTime.UtcNow.AddDays(7);
+            _context.ClientRequest.RemoveRange(_context.ClientRequest.Where(x => x.Time > DateTime.UtcNow.AddDays(7)));
+
             var exists = await ExistAsync(id);
 
             var request = exists ?
@@ -39,8 +41,8 @@ namespace PpeManager.Infrastructure.Idempotency
             _context.Add(request);
 
             await _context.SaveChangesAsync();
-            
-     
+
+
 
         }
     }

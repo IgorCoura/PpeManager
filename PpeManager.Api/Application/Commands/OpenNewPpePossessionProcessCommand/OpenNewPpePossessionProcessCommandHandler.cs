@@ -1,4 +1,6 @@
-﻿namespace PpeManager.Api.Application.Commands.OpenNewPpePossessionProcessCommand
+﻿using System.Globalization;
+
+namespace PpeManager.Api.Application.Commands.OpenNewPpePossessionProcessCommand
 {
     public class OpenNewPpePossessionProcessCommandHandler : IRequestHandler<OpenNewPpePossessionProcessCommand, WorkerDTO>
     {
@@ -25,9 +27,9 @@
                 worker.setIsOpenPpePossessionProcess(true);
             }
 
-            foreach(var c in request.Certifications)
+            foreach (var c in request.Certifications)
             {
-                var certification = _ppeRepository.Find(p => p.PpeCertifications.Select(x => x.Id == c.ppeCertificationId).FirstOrDefault()).PpeCertifications.Where(x => x.Id == c.ppeCertificationId).FirstOrDefault();
+                PpeCertification certification = _ppeRepository.FindCertification(p => p.Id == c.ppeCertificationId);
                 if (certification! == null!) continue;
                 var possession = new PpePossession(worker, certification, date, c.quantity);
                 worker.addPpePossession(possession);
@@ -40,4 +42,14 @@
             return WorkerDTO.FromEntity(worker);
         }
     }
+
+
+    public class OpenNewPpePossessionProcessIdentifiedCommandHandler : IdentifiedCommandHandler<OpenNewPpePossessionProcessCommand, WorkerDTO>
+    {
+        public OpenNewPpePossessionProcessIdentifiedCommandHandler(IMediator mediator, IRequestManager requestManager) : base(mediator, requestManager)
+        {
+        }
+    }
+
+
 }

@@ -11,13 +11,13 @@ namespace PpeManager.Infrastructure.EntityConfigurations
             builder.Ignore(x => x.DomainEvents);
             builder.Ignore(x => x.Notifications);
             builder.Ignore(X => X.IsValid);
-            builder.Property(x=> x.Id)
+            builder.Property(x => x.Id)
                 .UseHiLo("companyseq", PpeManagerContext.DEFAULT_SCHEMA);
             builder.Property(x => x.Name)
                 .HasConversion(x => x.ToString(), x => x)
                 .IsRequired();
             builder.Property(x => x.Cnpj)
-                .HasConversion(x=> x.ToString(), x => x);
+                .HasConversion(x => x.ToString(), x => x);
         }
     }
 }

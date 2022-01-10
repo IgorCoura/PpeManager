@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PpeManager.Domain.AggregatesModel.AggregateWorker
+﻿namespace PpeManager.Domain.AggregatesModel.AggregateWorker
 {
-    public interface IWorkerRepository: IRepository<Worker>
+    public interface IWorkerRepository : IRepository<Worker>
     {
         public Worker Add(Worker entity);
 
@@ -14,6 +8,7 @@ namespace PpeManager.Domain.AggregatesModel.AggregateWorker
 
         public Worker Find(Func<Worker, bool> p);
 
+        public Worker FindByPossession(Func<PpePossession, bool> p);
         public IEnumerable<Worker> FindAll(Func<Worker, bool> p);
     }
 }

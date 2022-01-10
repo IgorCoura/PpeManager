@@ -17,7 +17,7 @@ namespace PpeManager.Infrastructure.Repositories
                 return _context;
             }
         }
-        
+
         public Ppe Add(Ppe entity)
         {
 
@@ -29,10 +29,22 @@ namespace PpeManager.Infrastructure.Repositories
             return _context.Ppe.Update(entity).Entity;
         }
 
+
+        public Ppe FindById(int id)
+        {
+            return _context.Ppe.FirstOrDefault(p => p.Id == id) ?? throw new ArgumentException(nameof(Ppe));
+        }
+
         public Ppe Find(Func<Ppe, bool> p)
         {
-            var entity = _context.Ppe.FirstOrDefault(p) ?? throw new ArgumentException();
+            var entity = _context.Ppe.FirstOrDefault(p) ?? throw new ArgumentException(nameof(Ppe));
             _context.Entry(entity).Collection(x => x.PpeCertifications).Load();
+            return entity;
+        }
+
+        public PpeCertification FindCertification(Func<PpeCertification, bool> p)
+        {
+            var entity = _context.PpeCertification.FirstOrDefault(p) ?? throw new ArgumentException(nameof(PpeCertification));
             return entity;
         }
 
@@ -41,6 +53,6 @@ namespace PpeManager.Infrastructure.Repositories
             var entity = _context.Ppe.Where(p);
             return entity;
         }
-        
+
     }
 }

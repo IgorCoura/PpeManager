@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading;
 
 namespace PpeManager.UnitTests.Application.Controller
 {
@@ -41,11 +40,11 @@ namespace PpeManager.UnitTests.Application.Controller
             //Act
             var ppeController = new PpeController(_mediatorMock.Object);
             var actionResult = await ppeController.CreatePpeAsync(validCommand, "");
-            var result = actionResult.Result as BadRequestObjectResult?? throw new ArgumentNullException();
+            var result = actionResult.Result as BadRequestObjectResult ?? throw new ArgumentNullException();
             //Assert
             Assert.Equal((int)System.Net.HttpStatusCode.BadRequest, result.StatusCode);
             Assert.Equal("Invalid request Id", result.Value);
-            
+
         }
 
         [Fact]
@@ -72,7 +71,7 @@ namespace PpeManager.UnitTests.Application.Controller
             var validCommand = new AddNewPpeCertificationCommand(0, "12345", 1);
             var list = new List<PpeCertificationDTO>();
             list.Add(new PpeCertificationDTO(0, "12345", "12/12/12", 1));
-            var resultExpected = new PpeDTO(0, "FackDTO", "FackDTO",list);
+            var resultExpected = new PpeDTO(0, "FackDTO", "FackDTO", list);
 
             _mediatorMock.Setup(x => x.Send(It.IsAny<IdentifiedCommand<AddNewPpeCertificationCommand, PpeDTO>>(), default(CancellationToken)))
                 .Returns(Task.FromResult(resultExpected));

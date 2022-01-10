@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PpeManager.Api.Application.Commands.ClosePpePossessionProcessCommand;
+﻿using PpeManager.Api.Application.Commands.ClosePpePossessionProcessCommand;
 using PpeManager.Api.Application.Commands.CreateWorkerCommand;
 using PpeManager.Api.Application.Commands.OpenNewPpePossessionProcessCommand;
 
@@ -10,12 +9,26 @@ namespace PpeManager.Api.Controllers
     public class WorkerController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly IWorkerQueries _workerQueries;
 
-        public WorkerController(
-            IMediator mediator
-            )
+        public WorkerController(IMediator mediator, IWorkerQueries workerQueries)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _workerQueries = workerQueries ?? throw new ArgumentNullException(nameof(workerQueries));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpPost]
@@ -23,7 +36,7 @@ namespace PpeManager.Api.Controllers
         {
             try
             {
-                if(Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+                if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
                 {
                     var identified = new IdentifiedCommand<CreateWorkerCommand, WorkerDTO>(createWorkerCommand, guid);
                     var result = await _mediator.Send(identified);
@@ -37,13 +50,13 @@ namespace PpeManager.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);  
+                return BadRequest(ex.Message);
             }
-            
+
         }
 
         [HttpPost("possession/close")]
-        public async Task<ActionResult> closePpePossessionProcess([FromForm]IFormFile file, [FromQuery] int workerId,  [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<ActionResult> closePpePossessionProcess([FromForm] IFormFile file, [FromQuery] int workerId, [FromHeader(Name = "x-requestid")] string requestId)
         {
             try
             {

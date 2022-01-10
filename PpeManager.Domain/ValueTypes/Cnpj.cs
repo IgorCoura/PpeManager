@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PpeManager.Domain.ValueTypes
+﻿namespace PpeManager.Domain.ValueTypes
 {
     public struct Cnpj
     {
@@ -40,7 +34,7 @@ namespace PpeManager.Domain.ValueTypes
             int sum, rest;
 
             var value = _value.Trim();
-            value = value.Replace(".", "").Replace("-", "").Replace("/","");
+            value = value.Replace(".", "").Replace("-", "").Replace("/", "");
 
             if (value.Length != 14)
             {

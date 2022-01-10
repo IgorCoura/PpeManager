@@ -18,13 +18,13 @@
             //Arrange
             var fakeCommand = new CreatePpeCommand("fakePpe", "FakeDescription");
             var entity = new Ppe(fakeCommand.Name, fakeCommand.Description);
-            var expectedResult =PpeDTO.FromEntity(entity);  
+            var expectedResult = PpeDTO.FromEntity(entity);
 
             _ppeRepositoryMock.Setup(repo => repo.Add(It.IsAny<Ppe>())).Returns(entity);
             _ppeRepositoryMock.Setup(repo => repo.UnitOfWork.SaveEntitiesAsync(It.IsAny<CancellationToken>()));
 
             //Act
-            var handler = new CreatePpeCommandHandler( _notificationMock.Object, _ppeRepositoryMock.Object);
+            var handler = new CreatePpeCommandHandler(_notificationMock.Object, _ppeRepositoryMock.Object);
             var cltToken = new System.Threading.CancellationToken();
             var result = await handler.Handle(fakeCommand, cltToken);
 
@@ -39,7 +39,7 @@
             var fakeCommand = new CreatePpeCommand("", "");
 
             //Act
-            var handler = new CreatePpeCommandHandler( _notificationMock.Object, _ppeRepositoryMock.Object);
+            var handler = new CreatePpeCommandHandler(_notificationMock.Object, _ppeRepositoryMock.Object);
             var cltToken = new System.Threading.CancellationToken();
 
             //Asssert 

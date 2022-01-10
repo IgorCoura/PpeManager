@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PpeManager.Infrastructure.EntityConfigurations
 {
@@ -26,7 +21,7 @@ namespace PpeManager.Infrastructure.EntityConfigurations
                 .IsRequired();
 
             builder.HasMany(x => x.PpeCertifications)
-                .WithOne(x=> x.Ppe)
+                .WithOne(x => x.Ppe)
                 .HasForeignKey("PpeId")
                 .IsRequired();
         }

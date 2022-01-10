@@ -18,7 +18,7 @@
             var formFile = request.File;
             if (formFile.Length > 0)
             {
-                if(!Directory.Exists(_environment.WebRootPath + "docs"))
+                if (!Directory.Exists(_environment.WebRootPath + "docs"))
                 {
                     Directory.CreateDirectory(_environment.WebRootPath + "docs");
                 }
@@ -27,12 +27,12 @@
                 using (var stream = System.IO.File.Create(filePath))
                 {
                     await formFile.CopyToAsync(stream);
-                    stream.Flush(); 
+                    stream.Flush();
                 }
-                
-                foreach(var p in worker.PpePossessions)
+
+                foreach (var p in worker.PpePossessions)
                 {
-                    if(p.Confirmation == false)
+                    if (p.Confirmation == false)
                     {
                         p.confirmation(true, filePath);
                     }

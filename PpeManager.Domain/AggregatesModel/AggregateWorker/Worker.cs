@@ -1,8 +1,20 @@
-﻿namespace PpeManager.Domain.AggregatesModel.AggregateWorker
+﻿using System.Globalization;
+
+namespace PpeManager.Domain.AggregatesModel.AggregateWorker
 {
-    public class Worker: Entity, IAggregateRoot
+    public class Worker : Entity, IAggregateRoot
     {
-        public Worker(Name name, string role, Cpf cpf, string registrationNumber, string admissionDate,Company company, IList<Ppe>? ppes = null, IList<PpePossession>? ppePossessions = null)
+#pragma warning disable CS8618 // O propriedade não anulável 'Company' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning disable CS8618 // O propriedade não anulável 'Ppes' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning disable CS8618 // O propriedade não anulável 'PpePossessions' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning disable CS8618 // O propriedade não anulável 'Role' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning disable CS8618 // O propriedade não anulável 'RegistrationNumber' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+        public Worker(Name name, string role, Cpf cpf, string registrationNumber, string admissionDate, Company company, IList<Ppe>? ppes = null, IList<PpePossession>? ppePossessions = null)
+#pragma warning restore CS8618 // O propriedade não anulável 'RegistrationNumber' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning restore CS8618 // O propriedade não anulável 'Role' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning restore CS8618 // O propriedade não anulável 'PpePossessions' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning restore CS8618 // O propriedade não anulável 'Ppes' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning restore CS8618 // O propriedade não anulável 'Company' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
         {
             AddNotifications(
                 cpf.contract,
@@ -25,7 +37,17 @@
             }
         }
 
+#pragma warning disable CS8618 // O propriedade não anulável 'PpePossessions' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning disable CS8618 // O propriedade não anulável 'Role' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning disable CS8618 // O propriedade não anulável 'RegistrationNumber' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning disable CS8618 // O propriedade não anulável 'Company' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning disable CS8618 // O propriedade não anulável 'Ppes' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
         public Worker()
+#pragma warning restore CS8618 // O propriedade não anulável 'Ppes' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning restore CS8618 // O propriedade não anulável 'Company' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning restore CS8618 // O propriedade não anulável 'RegistrationNumber' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning restore CS8618 // O propriedade não anulável 'Role' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+#pragma warning restore CS8618 // O propriedade não anulável 'PpePossessions' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
         {
 
         }
@@ -41,11 +63,13 @@
             IsOpenPpePossessionProcess = var;
         }
         public virtual Company Company { get; private set; }
+#pragma warning disable CS0649 // Campo "Worker._companyId" nunca é atribuído e sempre terá seu valor padrão 0
         private int _companyId;
+#pragma warning restore CS0649 // Campo "Worker._companyId" nunca é atribuído e sempre terá seu valor padrão 0
         public int getCompanyId => _companyId;
         public virtual IList<Ppe> Ppes { get; private set; }
         public virtual IList<PpePossession> PpePossessions { get; private set; }
-        
+
 
         public void setCompany(Company company)
         {
@@ -56,7 +80,12 @@
             {
                 Company = company;
             }
-            
+
+        }
+
+        public void AddPpe(Ppe value)
+        {
+            Ppes.Add(value);
         }
 
         public void setPpePossession(List<PpePossession> value)
@@ -86,7 +115,8 @@
         private Contract<Notification> ValidateAdmissionDate(string admissionDateString)
         {
             var contract = new Contract<Notification>();
-            if (DateOnly.TryParse(admissionDateString, out var admissionDate) ) {
+            if (DateOnly.TryParse(admissionDateString, new CultureInfo("pt-BR"), DateTimeStyles.None, out var admissionDate))
+            {
                 contract
                 .IsNotNull(admissionDate, nameof(admissionDate), "Admssion Date not be null")
                 .IsLowerThan(DateTime.Now.AddYears(-100), admissionDate.ToDateTime(TimeOnly.MinValue), nameof(admissionDate), "Admission Date has an invalid date")

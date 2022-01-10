@@ -1,6 +1,6 @@
 ﻿namespace PpeManager.Api.Infrastructure.Services
 {
-    public class ConsultApprovalCertificateNumberException: Exception
+    public class ConsultApprovalCertificateNumberException : Exception
     {
         public ConsultApprovalCertificateNumberException() { }
 

@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using PpeManager.Domain.ValueTypes;
+using System.Globalization;
 
 namespace PpeManager.Api.Infrastructure.Services
 {
@@ -9,7 +10,6 @@ namespace PpeManager.Api.Infrastructure.Services
         public ConsultApprovalCertificateNumberService(HttpClient client)
         {
             _client = client;
-            client.Timeout = TimeSpan.FromSeconds(10);
         }
 
         public DateOnly ConsultValidity(ApprovalCertificate number)
@@ -38,11 +38,12 @@ namespace PpeManager.Api.Infrastructure.Services
                     var doc = html.DocumentNode;
                     var element = doc.Descendants(0).Where(n => n.HasClass("validade_ca"));
                     var text = element.Single().InnerText;
-                    if (DateOnly.TryParse(text, out DateOnly date))
+                    if (DateOnly.TryParse(text, new CultureInfo("pt-BR"), DateTimeStyles.None, out DateOnly date))
                     {
                         return date;
                     }
 
+                    
                     throw new ConsultApprovalCertificateNumberException("The validity is invalid");
 
 

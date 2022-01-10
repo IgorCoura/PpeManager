@@ -1,11 +1,9 @@
 ﻿global using Flunt.Notifications;
-global using System.Text.RegularExpressions;
-global using System.Reflection;
-global using MediatR;
-global using PpeManager.Domain.ValueTypes;
-global using PpeManager.Domain.Seedwork;
 global using Flunt.Validations;
-global using PpeManager.Domain.AggregatesModel.AggregatePpe;
-global using PpeManager.Domain.Exceptions;
+global using MediatR;
 global using PpeManager.Domain.AggregatesModel.AggregateCompany;
-global using PpeManager.Domain.Events;
+global using PpeManager.Domain.AggregatesModel.AggregatePpe;
+global using PpeManager.Domain.Seedwork;
+global using PpeManager.Domain.ValueTypes;
+global using System.Reflection;
+global using System.Text.RegularExpressions;

@@ -13,12 +13,14 @@ namespace PpeManager.UnitTests.Domain.DomainHandler
 
         public SetValidityToPpePossessionHandlerTest()
         {
-            _ppeRepositoryMock = new Mock<IPpeRepository>();    
+            _ppeRepositoryMock = new Mock<IPpeRepository>();
             _workerRepositoryMock = new Mock<IWorkerRepository>();
             _notificationContextMock = new Mock<NotificationContext>();
         }
         [Fact]
+#pragma warning disable CS1998 // Este método assíncrono não possui operadores 'await' e será executado de modo síncrono. É recomendável o uso do operador 'await' para aguardar chamadas à API desbloqueadas ou do operador 'await Task.Run(...)' para realizar um trabalho associado à CPU em um thread em segundo plano.
         public async Task Handler_set_validity_with_suceful()
+#pragma warning restore CS1998 // Este método assíncrono não possui operadores 'await' e será executado de modo síncrono. É recomendável o uso do operador 'await' para aguardar chamadas à API desbloqueadas ou do operador 'await Task.Run(...)' para realizar um trabalho associado à CPU em um thread em segundo plano.
         {
             //Arrange
             var notification = new SetValidityToPpePossession(0, 0);
@@ -32,7 +34,7 @@ namespace PpeManager.UnitTests.Domain.DomainHandler
             var listPpe = new List<Ppe>();
             listPpe.Add(ppe);
             var ppePossession = new PpePossession(null, null, DateOnly.FromDateTime(DateTime.Now), 5);
-            var listPossession = new List<PpePossession>(); 
+            var listPossession = new List<PpePossession>();
             listPossession.Add(ppePossession);
             var worker = new Worker("Name", "Role", "092.444.670-62", "1234", DateOnly.FromDateTime(DateTime.Now).ToString(), new Company("Fake", "73.706.750/0001-57"), listPpe, listPossession);
 

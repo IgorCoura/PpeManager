@@ -2,7 +2,7 @@
 
 namespace PpeManager.Domain.AggregatesModel.AggregatePpe
 {
-    public class Ppe: Entity, IAggregateRoot
+    public class Ppe : Entity, IAggregateRoot
     {
         public Name Name { get; }
         public Description Description { get; }
@@ -23,7 +23,7 @@ namespace PpeManager.Domain.AggregatesModel.AggregatePpe
                 PpeCertifications = new List<PpeCertification>();
             }
 
-           
+
         }
 
         public void setPpeCertifications(IList<PpeCertification> list)
@@ -42,9 +42,9 @@ namespace PpeManager.Domain.AggregatesModel.AggregatePpe
             {
                 AddNotification(new Notification(nameof(PpeCertification), "Ppe certification is invalid"));
             }
-            
+
         }
-     
-        
+
+
     }
 }

@@ -23,7 +23,7 @@
             var alreadyExists = await _requestManager.ExistAsync(request.Id);
             if (alreadyExists)
             {
-                throw new DuplicateCommandException(nameof(request.Command)+" duplicate");
+                throw new DuplicateCommandException(nameof(request.Command) + " duplicate");
             }
             else
             {
@@ -35,7 +35,7 @@
                 return result;
             }
 
-            
+
         }
     }
 }

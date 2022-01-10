@@ -1,8 +1,10 @@
 ﻿namespace PpeManager.Domain.AggregatesModel.AggregatePpe
 {
-    public class PpeCertification: Entity
+    public class PpeCertification : Entity
     {
+#pragma warning disable CS8618 // O propriedade não anulável 'Ppe' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
         public PpeCertification(int ppeId, ApprovalCertificate approvalCertificateNumber, DateOnly validity, int durability)
+#pragma warning restore CS8618 // O propriedade não anulável 'Ppe' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
         {
             AddNotifications(
                 ValidateValidity(validity),
@@ -24,6 +26,19 @@
         public ApprovalCertificate ApprovalCertificateNumber { get; private set; }
         public DateOnly Validity { get; private set; }
         public int Durability { get; private set; }
+
+        public DateOnly getValidityToPpePossession()
+        {
+
+            if (Validity.ToDateTime(TimeOnly.MinValue) < DateTime.Now.AddDays(Durability))
+            {
+                return Validity;
+            }
+            else
+            {
+                return  DateOnly.FromDateTime(DateTime.Now.AddDays(Durability));
+            }
+        }
 
 
         private Contract<Notification> ValidateValidity(DateOnly validity) =>

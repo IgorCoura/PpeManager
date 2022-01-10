@@ -59,6 +59,10 @@
               "target": "Package",
               "version": "[7.2.0, )"
             },
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
             "HtmlAgilityPack": {
               "target": "Package",
               "version": "[1.11.39, )"
@@ -96,6 +100,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.3, )"
             }
           },
           "imports": [
