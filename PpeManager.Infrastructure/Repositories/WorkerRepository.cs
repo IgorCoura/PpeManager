@@ -1,7 +1,7 @@
 ﻿
 namespace PpeManager.Infrastructure.Repositories
 {
-    public class WorkerRepository : IWorkerRepository, IWorkerQueries
+    public class WorkerRepository : IWorkerRepository
     {
 
         private readonly PpeManagerContext _context;
@@ -32,16 +32,14 @@ namespace PpeManager.Infrastructure.Repositories
 
         public Worker Find(Func<Worker, bool> p)
         {
-            var entity = _context.Worker.Include(x => x.Company).FirstOrDefault(p) ?? throw new ArgumentNullException(nameof(Worker));
-            _context.Entry(entity).Collection(i => i.Ppes).Load();
-            _context.Entry(entity).Collection(i => i.PpePossessions).Load();
+            var entity = _context.Worker.Include(x => x.Company).Include(x => x.Ppes).Include(x => x.PpePossessions).ThenInclude(x => x.PpeCertification).ThenInclude(x => x.Ppe).FirstOrDefault(p) ?? throw new ArgumentNullException(nameof(Worker));
             return entity;
         }
 
         public Worker FindByPossession(Func<PpePossession, bool> p)
         {
-            var entity = _context.PpePossession.Include(x => x.Worker).FirstOrDefault(p) ?? throw new ArgumentNullException(nameof(PpePossession));
-            return _context.Worker.Include(x => x.PpePossessions).Include(x => x.Ppes).FirstOrDefault(x => x.Id == entity.Worker.Id) ?? throw new ArgumentNullException(nameof(Worker));
+            var entity = _context.PpePossession.FirstOrDefault(p) ?? throw new ArgumentNullException(nameof(PpePossession));
+            return _context.Worker.Include(x => x.PpePossessions).Include(x => x.Ppes).FirstOrDefault(x => x.Id == entity.WorkerId) ?? throw new ArgumentNullException(nameof(Worker));
         }
 
         public IEnumerable<Worker> FindAll(Func<Worker, bool> p)
@@ -52,3 +50,4 @@ namespace PpeManager.Infrastructure.Repositories
 
     }
 }
+

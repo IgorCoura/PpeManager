@@ -22,7 +22,7 @@
             var fakeCommand = new AddNewPpeCertificationCommand(0, "31469", 5);
             var entity = new Ppe("Ppe", "PpeDescription");
             var entityWithoutCertification = new Ppe("Ppe", "PpeDescription");
-            entity.addCertification(new PpeCertification(0, fakeCommand.ApprovalCertificateNumber, DateOnly.MaxValue, fakeCommand.Durability));
+            entity.addCertification(new PpeCertification( fakeCommand.ApprovalCertificateNumber, DateOnly.MaxValue, fakeCommand.Durability));
             var expectedResult = PpeDTO.FromEntity(entity);
 
             _ppeRepositoryMock.Setup(repo => repo.Find(It.IsAny<Func<Ppe, bool>>())).Returns(entityWithoutCertification);

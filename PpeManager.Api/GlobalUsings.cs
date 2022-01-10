@@ -18,3 +18,7 @@ global using PpeManager.Infrastructure.Idempotency;
 global using PpeManager.Infrastructure.Repositories;
 global using System.Reflection;
 global using System.Globalization;
+global using Microsoft.EntityFrameworkCore;
+global using PpeManager.Api.Application.Queries;
+global using PpeManager.Api.Infrastructure.Services;
+global using PpeManager.Domain.AggregatesModel.AggregateCompany;

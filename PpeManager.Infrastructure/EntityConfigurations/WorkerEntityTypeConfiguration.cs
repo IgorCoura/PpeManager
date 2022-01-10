@@ -29,17 +29,19 @@ namespace PpeManager.Infrastructure.EntityConfigurations
                 .IsRequired();
             builder.Property(x => x.AdmissionDate)
                 .IsRequired();
+            builder.Property(x => x.PpesNotDelivered)
+                .IsRequired();
+            builder.Property(x => x.DueDate)
+                .IsRequired(false);
 
 
             builder.HasOne(x => x.Company)
                 .WithMany()
-                .HasForeignKey("CompanyId")
+                .HasForeignKey(x => x.CompanyId)
                 .IsRequired();
 
             builder.HasMany(x => x.PpePossessions)
-                .WithOne(x => x.Worker)
-                .HasForeignKey("WorkerId")
-                .IsRequired();
+                .WithOne(x => x.Worker);
 
             builder.HasMany(x => x.Ppes)
                 .WithMany(x => x.Workers);

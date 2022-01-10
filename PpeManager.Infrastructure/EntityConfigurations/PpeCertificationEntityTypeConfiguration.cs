@@ -25,6 +25,10 @@ namespace PpeManager.Infrastructure.EntityConfigurations
                 .IsRequired();
             builder.Property(x => x.Durability)
                 .IsRequired();
+
+            builder.HasOne(x => x.Ppe)
+                .WithMany(x => x.PpeCertifications)
+                .HasForeignKey(x => x.PpeId);
         }
     }
 }

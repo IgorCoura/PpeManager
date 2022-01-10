@@ -3,7 +3,7 @@
     public record WorkerDTO
     {
 #pragma warning disable CS8618 // O propriedade não anulável 'Cpf' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
-        public WorkerDTO(int id, string name, string role, string cpf, string registrationNumber, string admissionDate, CompanyDTO company, IList<PpeWithoutCertificationsDTO>? ppes = null, IList<PpePossessionDTO>? ppePossessions = null)
+        public WorkerDTO(int id, string name, string role, string cpf, string registrationNumber, string admissionDate, CompanyDTO company, IList<PpeWithoutCertificationsDTO?>? ppes = null, IList<PpePossessionDTO?>? ppePossessions = null)
 
         {
             Id = id;
@@ -12,8 +12,8 @@
             RegistrationNumber = registrationNumber;
             AdmissionDate = admissionDate;
             Company = company;
-            Ppes = ppes ?? new List<PpeWithoutCertificationsDTO>();
-            PpePossessions = ppePossessions ?? new List<PpePossessionDTO>();
+            Ppes = ppes ?? new List<PpeWithoutCertificationsDTO?>();
+            PpePossessions = ppePossessions ?? new List<PpePossessionDTO?>();
         }
 
         public int Id { get; private set; }
@@ -23,8 +23,8 @@
         public string RegistrationNumber { get; private set; }
         public string AdmissionDate { get; private set; }
         public CompanyDTO Company { get; private set; }
-        public IList<PpeWithoutCertificationsDTO> Ppes { get; private set; }
-        public IList<PpePossessionDTO> PpePossessions { get; private set; }
+        public IList<PpeWithoutCertificationsDTO?> Ppes { get; private set; }
+        public IList<PpePossessionDTO?> PpePossessions { get; private set; }
 
 
         public static WorkerDTO FromEntity(Worker worker)

@@ -1,29 +1,25 @@
-﻿using Dapper;
-using Npgsql;
+﻿
 
 namespace PpeManager.Api.Application.Queries
 {
     public class WorkerQueries : IWorkerQueries
     {
-        private readonly string _connectionString;
+        private readonly PpeManagerContext _context;
 
-        public WorkerQueries(string connectionString)
+        public WorkerQueries(PpeManagerContext context)
         {
-            _connectionString = connectionString;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<dynamic> GetAllWorkers()
+
+        public IEnumerable<WorkerDTO> GetAll()
         {
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                var result = await connection.QueryAsync<dynamic>(
-                    @"SELECT * FROM ppemanager.workers"
-                    );
-
-                return result;
+            var entity = _context.Worker.Include(x => x.Company).Include(x => x.Ppes).Include(x => x.PpePossessions.OrderBy(x => x.Validity)).ThenInclude(x => x.PpeCertification).ToList();
+            return entity.Select(e => WorkerDTO.FromEntity(e));
+        }
             }
-        }
-    }
+
+  
+
 }
+    

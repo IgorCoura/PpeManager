@@ -2,9 +2,7 @@
 {
     public class PpeCertification : Entity
     {
-#pragma warning disable CS8618 // O propriedade não anulável 'Ppe' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
-        public PpeCertification(int ppeId, ApprovalCertificate approvalCertificateNumber, DateOnly validity, int durability)
-#pragma warning restore CS8618 // O propriedade não anulável 'Ppe' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+        public PpeCertification( ApprovalCertificate approvalCertificateNumber, DateOnly validity, int durability)
         {
             AddNotifications(
                 ValidateValidity(validity),
@@ -13,7 +11,6 @@
                 );
             if (IsValid)
             {
-                _ppeId = ppeId;
                 ApprovalCertificateNumber = approvalCertificateNumber;
                 Validity = validity;
                 Durability = durability;
@@ -21,8 +18,7 @@
         }
 
         public virtual Ppe Ppe { get; private set; }
-        private int _ppeId;
-        public int getPpeId => _ppeId;
+        public int PpeId { get; private set; }
         public ApprovalCertificate ApprovalCertificateNumber { get; private set; }
         public DateOnly Validity { get; private set; }
         public int Durability { get; private set; }

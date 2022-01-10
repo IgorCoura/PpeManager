@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "u3gY+JjZTm1JvDJqJhXnm3cpehUZAIAVxyj8h0qhLe8peSkVa9lKJ5hZTxaCsF35XbU+Jvjratu1+Lsipk3+uA==",
+  "dgSpecHash": "vhAotXvlYoH1sQCMcImIi0Lpsw2uXqUMHz/X9chMu8RVx9nJD0DwM+Egx8Pk0KAe1XugoNgX27W6YSt9ju0MSA==",
   "success": true,
   "projectFilePath": "C:\\Users\\IGOR-NOT\\Desktop\\CodigosSSD\\rufino-project\\back-end\\PpeManager\\PpeManager.Api\\PpeManager.Api.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,7 @@
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.1\\microsoft.entityframeworkcore.analyzers.6.0.1.nupkg.sha512",
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.1\\microsoft.entityframeworkcore.design.6.0.1.nupkg.sha512",
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.1\\microsoft.entityframeworkcore.relational.6.0.1.nupkg.sha512",
+    "C:\\Users\\IGOR-NOT\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\6.0.1\\microsoft.entityframeworkcore.tools.6.0.1.nupkg.sha512",
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\IGOR-NOT\\.nuget\\packages\\microsoft.extensions.caching.memory\\6.0.0\\microsoft.extensions.caching.memory.6.0.0.nupkg.sha512",

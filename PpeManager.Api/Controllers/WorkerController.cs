@@ -1,6 +1,7 @@
 ﻿using PpeManager.Api.Application.Commands.ClosePpePossessionProcessCommand;
 using PpeManager.Api.Application.Commands.CreateWorkerCommand;
 using PpeManager.Api.Application.Commands.OpenNewPpePossessionProcessCommand;
+using PpeManager.Api.Application.Queries;
 
 namespace PpeManager.Api.Controllers
 {
@@ -14,7 +15,8 @@ namespace PpeManager.Api.Controllers
         public WorkerController(IMediator mediator, IWorkerQueries workerQueries)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _workerQueries = workerQueries ?? throw new ArgumentNullException(nameof(workerQueries));
+            _workerQueries = workerQueries ?? throw new ArgumentNullException(nameof(workerQueries)); 
+
         }
 
         [HttpGet]
@@ -22,7 +24,8 @@ namespace PpeManager.Api.Controllers
         {
             try
             {
-                return Ok();
+                var result = _workerQueries.GetAll();
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -56,14 +59,14 @@ namespace PpeManager.Api.Controllers
         }
 
         [HttpPost("possession/close")]
-        public async Task<ActionResult> closePpePossessionProcess([FromForm] IFormFile file, [FromQuery] int workerId, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<ActionResult<WorkerDTO>> closePpePossessionProcess([FromForm] IFormFile file, [FromQuery] int workerId, [FromHeader(Name = "x-requestid")] string requestId)
         {
             try
             {
                 if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
                 {
                     var command = new ClosePpePossessionProcessCommand(workerId, file);
-                    var identified = new IdentifiedCommand<ClosePpePossessionProcessCommand, bool>(command, guid);
+                    var identified = new IdentifiedCommand<ClosePpePossessionProcessCommand, WorkerDTO>(command, guid);
                     var result = await _mediator.Send(identified);
                     return Ok();
                 }

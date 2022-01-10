@@ -1,7 +1,4 @@
-﻿using PpeManager.Api.Infrastructure.Services;
-using PpeManager.Domain.AggregatesModel.AggregateCompany;
-
-namespace PpeManager.Api.Infrastructure.AutofacModules;
+﻿namespace PpeManager.Api.Infrastructure.AutofacModules;
 
 public class ApplicationModule : Autofac.Module
 {
@@ -16,6 +13,10 @@ public class ApplicationModule : Autofac.Module
 
     protected override void Load(ContainerBuilder builder)
     {
+        builder.RegisterType<WorkerQueries>()
+            .As<IWorkerQueries>()
+            .InstancePerLifetimeScope();    
+
         builder.RegisterType<RequestManager>()
             .As<IRequestManager>()
             .InstancePerLifetimeScope();
@@ -33,7 +34,6 @@ public class ApplicationModule : Autofac.Module
 
         builder.RegisterType<WorkerRepository>()
             .As<IWorkerRepository>()
-            .As<IWorkerQueries>()
             .InstancePerLifetimeScope();
 
         builder.RegisterType<ConsultApprovalCertificateNumberService>()

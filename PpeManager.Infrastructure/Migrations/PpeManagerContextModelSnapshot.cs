@@ -136,7 +136,7 @@ namespace PpeManager.Infrastructure.Migrations
                     b.Property<DateOnly>("DeliveryDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("PpeCertificationId")
+                    b.Property<int?>("PpeCertificationId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
@@ -148,7 +148,7 @@ namespace PpeManager.Infrastructure.Migrations
                     b.Property<DateOnly>("Validity")
                         .HasColumnType("date");
 
-                    b.Property<int>("WorkerId")
+                    b.Property<int?>("WorkerId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -178,6 +178,9 @@ namespace PpeManager.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateOnly?>("DueDate")
+                        .HasColumnType("date");
+
                     b.Property<bool>("IsOpenPpePossessionProcess")
                         .HasColumnType("boolean");
 
@@ -185,6 +188,9 @@ namespace PpeManager.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Name");
+
+                    b.Property<int>("PpesNotDelivered")
+                        .HasColumnType("integer");
 
                     b.Property<string>("RegistrationNumber")
                         .IsRequired()
@@ -231,15 +237,11 @@ namespace PpeManager.Infrastructure.Migrations
                 {
                     b.HasOne("PpeManager.Domain.AggregatesModel.AggregatePpe.PpeCertification", "PpeCertification")
                         .WithMany()
-                        .HasForeignKey("PpeCertificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PpeCertificationId");
 
                     b.HasOne("PpeManager.Domain.AggregatesModel.AggregateWorker.Worker", "Worker")
                         .WithMany("PpePossessions")
-                        .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WorkerId");
 
                     b.Navigation("PpeCertification");
 

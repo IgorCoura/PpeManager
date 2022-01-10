@@ -21,7 +21,7 @@ namespace PpeManager.Api.Application.Commands.AddNewPpeCertificationCommand
             var validity = _consultApprovalCertificateNumberService.ConsultValidity(request.ApprovalCertificateNumber);
 
             var ppeOld = _ppeRepository.Find(ppe => ppe.Id == request.PpeId);
-            var ppeCertification = new PpeCertification(request.PpeId, request.ApprovalCertificateNumber, validity, request.Durability);
+            var ppeCertification = new PpeCertification(request.ApprovalCertificateNumber, validity, request.Durability);
             _notificationContext.AddNotifications(ppeCertification.Notifications);
 
             if (!_notificationContext.IsValid)

@@ -31,7 +31,7 @@ namespace PpeManager.Api.Application.Commands.OpenNewPpePossessionProcessCommand
             {
                 PpeCertification certification = _ppeRepository.FindCertification(p => p.Id == c.ppeCertificationId);
                 if (certification! == null!) continue;
-                var possession = new PpePossession(worker, certification, date, c.quantity);
+                var possession = new PpePossession(certification, date, c.quantity);
                 worker.addPpePossession(possession);
             }
 

@@ -2,16 +2,10 @@
 {
     public class PpePossession : Entity
     {
-        public virtual Worker Worker { get; private set; }
-        public int getWorkerId => _workerId;
-
-        private int _workerId;
-
-        public virtual PpeCertification PpeCertification { get; private set; }
-        public int getPpeCertificationId => _ppeCertificationId;
-
-        private int _ppeCertificationId;
-
+        public virtual Worker? Worker { get; private set; }
+        public int? WorkerId { get; private set; }
+        public virtual PpeCertification? PpeCertification { get; private set; }
+        public int? PpeCertificationId { get; private set; }
         public DateOnly DeliveryDate { get; private set; }
         public DateOnly Validity { get; private set; }
         public bool Confirmation { get; private set; } = false;
@@ -19,8 +13,8 @@
         public int Quantity { get; set; }
 
 
-        public PpePossession(Worker? worker, PpeCertification? ppeCertification, DateOnly deliveryDate, int quantity)
-      {
+        public PpePossession(PpeCertification ppeCertification, DateOnly deliveryDate, int quantity)
+        {
             AddNotifications(
                 ValidateQuantity(quantity),
                 ValidateDeliveryDate(deliveryDate)
@@ -30,10 +24,8 @@
             {
                 DeliveryDate = deliveryDate;
                 Quantity = quantity;
-                Worker = worker;
                 PpeCertification = ppeCertification;
                 Validity = ppeCertification.getValidityToPpePossession();
-
             }
 
         }
