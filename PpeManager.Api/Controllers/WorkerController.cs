@@ -59,7 +59,7 @@ namespace PpeManager.Api.Controllers
         }
 
         [HttpPost("possession/close")]
-        public async Task<ActionResult<WorkerDTO>> closePpePossessionProcess([FromForm] IFormFile file, [FromQuery] int workerId, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<ActionResult<WorkerDTO>> ClosePpePossessionProcess([FromForm] IFormFile file, [FromQuery] int workerId, [FromHeader(Name = "x-requestid")] string requestId)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace PpeManager.Api.Controllers
                     var command = new ClosePpePossessionProcessCommand(workerId, file);
                     var identified = new IdentifiedCommand<ClosePpePossessionProcessCommand, WorkerDTO>(command, guid);
                     var result = await _mediator.Send(identified);
-                    return Ok();
+                    return Ok(result);
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace PpeManager.Api.Controllers
         }
 
         [HttpPost("possession/open")]
-        public async Task<ActionResult<WorkerDTO>> openNewPpePossessionProcess([FromBody] OpenNewPpePossessionProcessCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<ActionResult<WorkerDTO>> OpenNewPpePossessionProcess([FromBody] OpenNewPpePossessionProcessCommand command, [FromHeader(Name = "x-requestid")] string requestId)
         {
             try
             {

@@ -8,11 +8,8 @@
                 name.contract,
                 cnpj.contract
                 );
-            if (IsValid)
-            {
-                Name = name;
-                Cnpj = cnpj;
-            }
+            Name = name;
+            Cnpj = cnpj;
         }
 
         public Name Name { get; private set; }

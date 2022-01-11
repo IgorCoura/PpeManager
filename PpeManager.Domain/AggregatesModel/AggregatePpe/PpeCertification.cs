@@ -9,12 +9,9 @@
                 ValidateDurability(durability),
                 approvalCertificateNumber.contract
                 );
-            if (IsValid)
-            {
-                ApprovalCertificateNumber = approvalCertificateNumber;
-                Validity = validity;
-                Durability = durability;
-            }
+            ApprovalCertificateNumber = approvalCertificateNumber;
+            Validity = validity;
+            Durability = durability;
         }
 
         public virtual Ppe Ppe { get; private set; }

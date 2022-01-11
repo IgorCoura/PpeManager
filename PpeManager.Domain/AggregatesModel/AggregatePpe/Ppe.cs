@@ -16,33 +16,15 @@ namespace PpeManager.Domain.AggregatesModel.AggregatePpe
                 name.contract,
                 description.contract
                 );
-            if (IsValid)
-            {
-                Name = name;
-                Description = description;
-                PpeCertifications = new List<PpeCertification>();
-            }
-
-
-        }
-
-        public void setPpeCertifications(IList<PpeCertification> list)
-        {
-            PpeCertifications = list;
-        }
-
+            Name = name;
+            Description = description;
+            PpeCertifications = new List<PpeCertification>();
+        } 
 
         public void addCertification(PpeCertification ppe)
         {
-            if (ppe.IsValid)
-            {
-                PpeCertifications.Add(ppe);
-            }
-            else
-            {
-                AddNotification(new Notification(nameof(PpeCertification), "Ppe certification is invalid"));
-            }
-
+           AddNotifications(ppe.Notifications);
+           PpeCertifications.Add(ppe);        
         }
 
 

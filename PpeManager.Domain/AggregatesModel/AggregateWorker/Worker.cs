@@ -14,27 +14,20 @@ namespace PpeManager.Domain.AggregatesModel.AggregateWorker
                 ValidateAdmissionDate(admissionDate)
                 );
 
-            if (IsValid)
-            {
+ 
                 Cpf = cpf;
                 Name = name;
                 Role = role;
                 RegistrationNumber = registrationNumber;
-                AdmissionDate = DateOnly.Parse(admissionDate);
+                AdmissionDate = DateOnly.Parse(admissionDate, new CultureInfo("pt-BR"), DateTimeStyles.None);
                 Company = company;
                 Ppes = ppes ?? new List<Ppe>();
                 PpePossessions = ppePossessions ?? new List<PpePossession>();
-            }
-            else
-            {
-                return;
-            }
-        }
 
-        public Worker()
-        {
+        }       
 
-        }
+        public Worker() { }
+ 
 
         public Name Name { get; private set; }
         public string Role { get; private set; }
@@ -60,25 +53,40 @@ namespace PpeManager.Domain.AggregatesModel.AggregateWorker
             AddNotifications(
                 company.Notifications
                 );
-            if (IsValid)
-            {
-                Company = company;
-            }
 
+            Company = company; 
         }
 
         public void AddPpe(Ppe value)
         {
+            AddNotifications(value.Notifications);
             Ppes.Add(value);
             PpesNotDelivered++;
         }
         public void addPpePossession(PpePossession ppe)
         {
+            AddNotifications(ppe.Notifications);
+
+            if (Ppes.Where(p => p.Id == ppe.PpeCertification!.PpeId).FirstOrDefault() is null)
+            {
+                AddNotification(new Notification(nameof(Worker),$"The worker {Name} is not allowed to receive this ppe."));
+                return;
+            }
+
+            var result = PpePossessions.Count <= 0 ? default: PpePossessions.Where(p => p.PpeCertification!.PpeId == ppe.PpeCertification!.PpeId).FirstOrDefault();
+
+            if(result is null)
+            {   
+                PpesNotDelivered--;
+            }
+
             PpePossessions.Add(ppe);
-            if(DueDate > ppe.Validity)
+
+            if (DueDate > ppe.Validity || DueDate is null)
             {
                 DueDate = ppe.Validity;
-            }            
+            }
+
         }
 
 

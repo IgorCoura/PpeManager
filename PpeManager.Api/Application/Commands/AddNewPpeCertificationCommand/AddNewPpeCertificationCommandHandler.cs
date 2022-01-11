@@ -22,12 +22,13 @@ namespace PpeManager.Api.Application.Commands.AddNewPpeCertificationCommand
 
             var ppeOld = _ppeRepository.Find(ppe => ppe.Id == request.PpeId);
             var ppeCertification = new PpeCertification(request.ApprovalCertificateNumber, validity, request.Durability);
-            _notificationContext.AddNotifications(ppeCertification.Notifications);
+            ppeOld.addCertification(ppeCertification);
 
+            _notificationContext.AddNotifications(ppeOld.Notifications);
             if (!_notificationContext.IsValid)
                 throw new PpeDomainException();
 
-            ppeOld.addCertification(ppeCertification);
+            
 
             var ppe = _ppeRepository.Update(ppeOld);
 

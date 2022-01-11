@@ -9,6 +9,7 @@
         public Worker Find(Func<Worker, bool> p);
 
         public Worker FindByPossession(Func<PpePossession, bool> p);
+        public Worker DeeplyFind(Func<Worker, bool> p);
         public IEnumerable<Worker> FindAll(Func<Worker, bool> p);
     }
 }

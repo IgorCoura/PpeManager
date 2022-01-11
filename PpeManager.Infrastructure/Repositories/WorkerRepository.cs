@@ -32,9 +32,17 @@ namespace PpeManager.Infrastructure.Repositories
 
         public Worker Find(Func<Worker, bool> p)
         {
-            var entity = _context.Worker.Include(x => x.Company).Include(x => x.Ppes).Include(x => x.PpePossessions).ThenInclude(x => x.PpeCertification).ThenInclude(x => x.Ppe).FirstOrDefault(p) ?? throw new ArgumentNullException(nameof(Worker));
+            var entity = _context.Worker.Include(x => x.Company).Include(x => x.Ppes).Include(x => x.PpePossessions).FirstOrDefault(p) ?? throw new ArgumentNullException(nameof(Worker));
             return entity;
         }
+
+        public Worker DeeplyFind(Func<Worker, bool> p)
+        {
+            var entity = _context.Worker.Include(x => x.Company).Include(x => x.Ppes).Include(x => x.PpePossessions).ThenInclude(x => x.PpeCertification).FirstOrDefault(p) ?? throw new ArgumentNullException(nameof(Worker));
+            return entity;
+        }
+
+
 
         public Worker FindByPossession(Func<PpePossession, bool> p)
         {

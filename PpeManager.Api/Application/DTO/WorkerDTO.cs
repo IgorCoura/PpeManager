@@ -9,6 +9,7 @@
             Id = id;
             Name = name;
             Role = role;
+            Cpf = cpf;
             RegistrationNumber = registrationNumber;
             AdmissionDate = admissionDate;
             Company = company;
@@ -29,7 +30,7 @@
 
         public static WorkerDTO FromEntity(Worker worker)
         {
-            return new WorkerDTO(worker.Id, worker.Name.ToString(), worker.Cpf.ToString(), worker.Role, worker.RegistrationNumber, worker.AdmissionDate.ToString(new CultureInfo("pt-BR")), CompanyDTO.FromEntity(worker.Company), worker.Ppes.Select(p => PpeWithoutCertificationsDTO.FromEntity(p)).ToList(), worker.PpePossessions.Select(p => PpePossessionDTO.FromEntity(p)).ToList());
+            return new WorkerDTO(worker.Id, worker.Name.ToString(), worker.Role, worker.Cpf.ToString(), worker.RegistrationNumber, worker.AdmissionDate.ToString(new CultureInfo("pt-BR")), CompanyDTO.FromEntity(worker.Company), worker.Ppes.Select(p => PpeWithoutCertificationsDTO.FromEntity(p)).ToList(), worker.PpePossessions.Select(p => PpePossessionDTO.FromEntity(p)).ToList());
         }
 
         public bool Equal(WorkerDTO dto) =>

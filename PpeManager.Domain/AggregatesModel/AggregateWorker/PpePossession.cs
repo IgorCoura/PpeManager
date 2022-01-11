@@ -20,18 +20,15 @@
                 ValidateDeliveryDate(deliveryDate)
                 );
 
-            if (IsValid)
-            {
-                DeliveryDate = deliveryDate;
-                Quantity = quantity;
-                PpeCertification = ppeCertification;
-                Validity = ppeCertification.getValidityToPpePossession();
-            }
+            DeliveryDate = deliveryDate;
+            Quantity = quantity;
+            PpeCertification = ppeCertification;
+            Validity = ppeCertification.getValidityToPpePossession();
 
         }
 
-
         public PpePossession() { }
+ 
 
         public void confirmation(bool confirmation, string filePath)
         {
