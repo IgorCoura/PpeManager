@@ -33,6 +33,10 @@ namespace PpeManager.Infrastructure.EntityConfigurations
                 .IsRequired();
             builder.Property(x => x.DueDate)
                 .IsRequired(false);
+            builder.Property(x => x.PpePossessionIdNextToTheDueDate)
+                .IsRequired(false);
+            
+
 
 
             builder.HasOne(x => x.Company)
@@ -41,10 +45,10 @@ namespace PpeManager.Infrastructure.EntityConfigurations
                 .IsRequired();
 
             builder.HasMany(x => x.PpePossessions)
-                .WithOne(x => x.Worker);
+                .WithOne(x => x.Worker)
+                .IsRequired(false);
 
-            builder.HasMany(x => x.Ppes)
-                .WithMany(x => x.Workers);
+
 
         }
     }

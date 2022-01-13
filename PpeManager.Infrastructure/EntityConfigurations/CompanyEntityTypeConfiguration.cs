@@ -16,8 +16,14 @@ namespace PpeManager.Infrastructure.EntityConfigurations
             builder.Property(x => x.Name)
                 .HasConversion(x => x.ToString(), x => x)
                 .IsRequired();
+            builder.Property(x => x.NickName)
+                .HasConversion(x => x.ToString(), x => x)
+                .IsRequired();
             builder.Property(x => x.Cnpj)
-                .HasConversion(x => x.ToString(), x => x);
+                .HasConversion(x => x.ToString(), x => x)
+                .IsRequired();
+
+
         }
     }
 }

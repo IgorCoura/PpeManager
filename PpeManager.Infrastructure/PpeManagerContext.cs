@@ -17,6 +17,7 @@ namespace PpeManager.Infrastructure
         public DbSet<Company> Company { get; set; }
         public DbSet<PpeCertification> PpeCertification { get; set; }
         public DbSet<PpePossession> PpePossession { get; set; }
+        public DbSet<PossessionRecord> PossessionRecord { get; set; }
         public DbSet<ClientRequest> ClientRequest { get; set; }
 
 
@@ -45,6 +46,7 @@ namespace PpeManager.Infrastructure
             modelBuilder.ApplyConfiguration(new PpePossessionEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PpeCertificationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new WorkerEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PossessionRecordEntityTypeConfiguration());
 
         }
 

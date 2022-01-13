@@ -15,9 +15,13 @@
         public string Validity { get; private set; }
         public int Durability { get; private set; }
 
-        public static PpeCertificationDTO? FromEntity(PpeCertification ppeCertification)
+        public static PpeCertificationDTO FromEntity(PpeCertification ppeCertification)
         {
-            return ppeCertification != null ? new PpeCertificationDTO(ppeCertification.Id, ppeCertification.ApprovalCertificateNumber.ToString(), ppeCertification.Validity.ToString(new CultureInfo("pt-BR")), ppeCertification.Durability): null;
+            return new PpeCertificationDTO(
+                ppeCertification.Id, 
+                ppeCertification.ApprovalCertificateNumber.ToString(), 
+                ppeCertification.Validity.ToString(new CultureInfo("pt-BR")), 
+                ppeCertification.Durability);
         }
 
     }

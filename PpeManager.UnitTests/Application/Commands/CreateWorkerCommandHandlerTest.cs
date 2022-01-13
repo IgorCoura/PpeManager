@@ -28,7 +28,7 @@ namespace PpeManager.UnitTests.Application.Commands
         {
             //Arrange
             var fakeCommand = new CreateWorkerCommand("fakeCommand", "role", "092.444.670-62", "12345", "12/12/12", 0, null);
-            var company = new Company("fakeCommand", "73.706.750/0001-57");
+            var company = new Company("fakeNick","fakeCommand", "73.706.750/0001-57");
             var entity = new Worker(fakeCommand.Name, fakeCommand.Role, fakeCommand.Cpf, fakeCommand.RegistrationNumber, DateOnly.Parse(fakeCommand.AdmissionDate).ToString(), company);
             var expectedResult = WorkerDTO.FromEntity(entity);
 

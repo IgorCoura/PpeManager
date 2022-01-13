@@ -8,7 +8,6 @@ namespace PpeManager.Domain.AggregatesModel.AggregatePpe
         public Description Description { get; }
         public virtual IList<PpeCertification> PpeCertifications { get; private set; }
 
-        public virtual IList<Worker> Workers { get; private set; }
 
         public Ppe(Name name, Description description)
         {

@@ -38,9 +38,9 @@ namespace PpeManager.Infrastructure.Idempotency
                     Time = DateTime.UtcNow
                 };
 
-            _context.Add(request);
+            //_context.Add(request);
 
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
 
 
 

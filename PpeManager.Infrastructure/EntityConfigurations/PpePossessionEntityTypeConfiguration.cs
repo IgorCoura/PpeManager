@@ -6,28 +6,37 @@ namespace PpeManager.Infrastructure.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<PpePossession> builder)
         {
-            builder.ToTable("ppePossession", PpeManagerContext.DEFAULT_SCHEMA);
+            builder.ToTable("ppePossessions", PpeManagerContext.DEFAULT_SCHEMA);
+            
             builder.HasKey(x => x.Id);
-            builder.Ignore(x => x.DomainEvents);
-            builder.Ignore(X => X.Notifications);
-            builder.Ignore(X => X.IsValid);
-            builder.Property(x => x.DeliveryDate)
-                .IsRequired();
-            builder.Property(x => x.Validity)
-                .IsRequired();
-            builder.Property(x => x.Confirmation)
-                .IsRequired();
-            builder.Property(x => x.SupportingDocument)
-                .IsRequired(false);
-            builder.Property(x => x.Quantity);
 
-            builder.HasOne(x => x.PpeCertification)
-                .WithMany()
-                .HasForeignKey(x => x.PpeCertificationId);
+            builder.Ignore(x => x.DomainEvents);
+            builder.Ignore(x => x.Notifications);
+            builder.Ignore(x => x.IsValid);
+
+            builder.Property(x => x.Id).UseHiLo("ppePossessionseq", PpeManagerContext.DEFAULT_SCHEMA);
+
+            builder.Property(x => x.IsDelivered)
+                .IsRequired();
+
+            builder.Property(x => x.DueDate)
+                .IsRequired(false);
 
             builder.HasOne(x => x.Worker)
                 .WithMany(x => x.PpePossessions)
-                .HasForeignKey(x => x.WorkerId);
+                .HasForeignKey(x => x.WorkerId)
+                .IsRequired();
+
+            builder.HasOne(x => x.Ppe)
+                .WithMany()
+                .HasForeignKey(x => x.PpeId)
+                .IsRequired();
+
+
+            builder.HasMany(x => x.PossessionRecords)
+                .WithOne(x => x.PpePossession)
+                .HasForeignKey(x => x.PpePossessionId)
+                .IsRequired(false);
         }
     }
 }

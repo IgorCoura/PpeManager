@@ -12,14 +12,11 @@ namespace PpeManager.Api.Application.Queries
         }
 
 
-        public IEnumerable<WorkerDTO> GetAll()
+        public IEnumerable<WorkerDTO> GetByPage(int offset, int limit)
         {
-            var entity = _context.Worker.Include(x => x.Company).Include(x => x.Ppes).Include(x => x.PpePossessions.OrderBy(x => x.Validity)).ThenInclude(x => x.PpeCertification).ToList();
+            var entity = _context.Worker.OrderByDescending(x => x.PpesNotDelivered).OrderBy(x => x.DueDate).Skip(offset).Take(limit).ToList();
             return entity.Select(e => WorkerDTO.FromEntity(e));
         }
-            }
-
-  
-
+    }
 }
     

@@ -4,7 +4,7 @@ namespace PpeManager.Domain.AggregatesModel.AggregateWorker
 {
     public class Worker : Entity, IAggregateRoot
     {
-        public Worker(Name name, string role, Cpf cpf, string registrationNumber, string admissionDate, Company company, IList<Ppe>? ppes = null, IList<PpePossession>? ppePossessions = null)
+        public Worker(Name name, string role, Cpf cpf, string registrationNumber, string admissionDate, int companyId)
         {   
             AddNotifications(
                 cpf.contract,
@@ -20,10 +20,7 @@ namespace PpeManager.Domain.AggregatesModel.AggregateWorker
                 Role = role;
                 RegistrationNumber = registrationNumber;
                 AdmissionDate = DateOnly.Parse(admissionDate, new CultureInfo("pt-BR"), DateTimeStyles.None);
-                Company = company;
-                Ppes = ppes ?? new List<Ppe>();
-                PpePossessions = ppePossessions ?? new List<PpePossession>();
-
+                CompanyId = companyId;
         }       
 
         public Worker() { }
@@ -41,10 +38,9 @@ namespace PpeManager.Domain.AggregatesModel.AggregateWorker
         }
         public virtual Company Company { get; private set; }
         public int CompanyId { get; private set; }
-        public virtual IList<Ppe> Ppes { get; private set; }
-        public virtual IList<PpePossession> PpePossessions { get; private set; }
-
+        public virtual IList<PpePossession> PpePossessions { get; private set; } = new List<PpePossession>();
         public DateOnly? DueDate { get; private set; }
+        public int? PpePossessionIdNextToTheDueDate { get; private set; }
         public int PpesNotDelivered { get; private set; } = 0;
 
 
@@ -57,34 +53,42 @@ namespace PpeManager.Domain.AggregatesModel.AggregateWorker
             Company = company; 
         }
 
-        public void AddPpe(Ppe value)
+        public void AddPpePossession(PpePossession value)
         {
             AddNotifications(value.Notifications);
-            Ppes.Add(value);
-            PpesNotDelivered++;
-        }
-        public void addPpePossession(PpePossession ppe)
-        {
-            AddNotifications(ppe.Notifications);
-
-            if (Ppes.Where(p => p.Id == ppe.PpeCertification!.PpeId).FirstOrDefault() is null)
+            PpePossessions.Add(value);
+            if (value.IsDelivered is false)
             {
-                AddNotification(new Notification(nameof(Worker),$"The worker {Name} is not allowed to receive this ppe."));
+                PpesNotDelivered++;
+            } 
+        }
+
+
+        public void AddPossessionRecord(PpeCertification ppeCertification, int quantity)
+        {          
+            var result = PpePossessions.Count <= 0 ? default: PpePossessions.Where(p => p.PpeId == ppeCertification.PpeId).FirstOrDefault();
+
+            if(result is null)
+            {
+                AddNotification(new Notification(nameof(Worker), $"The worker {Name} is not allowed to receive this ppe."));
                 return;
             }
 
-            var result = PpePossessions.Count <= 0 ? default: PpePossessions.Where(p => p.PpeCertification!.PpeId == ppe.PpeCertification!.PpeId).FirstOrDefault();
 
-            if(result is null)
-            {   
+            var possessionRecord = new PossessionRecord(ppeCertification, DateOnly.FromDateTime(DateTime.Now), quantity);
+            AddNotifications(possessionRecord.Notifications);
+
+            if(result.IsDelivered is false)
+            {
                 PpesNotDelivered--;
             }
 
-            PpePossessions.Add(ppe);
+            result.AddPossessionRecord(possessionRecord);            
 
-            if (DueDate > ppe.Validity || DueDate is null)
+            if (DueDate > result.DueDate || DueDate is null || PpePossessionIdNextToTheDueDate == result.Id)
             {
-                DueDate = ppe.Validity;
+                DueDate = possessionRecord.Validity;
+                PpePossessionIdNextToTheDueDate = result.Id;
             }
 
         }

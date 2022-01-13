@@ -17,7 +17,7 @@ namespace PpeManager.Api.Application.Commands.OpenNewPpePossessionProcessCommand
 
         public async Task<WorkerDTO> Handle(OpenNewPpePossessionProcessCommand request, CancellationToken cancellationToken)
         {
-            var worker = _workerRepository.DeeplyFind(p => p.Id == request.WorkerId);
+            var worker = _workerRepository.Find(p => p.Id == request.WorkerId);
             var date = DateOnly.FromDateTime(DateTime.Now);
 
             if (worker.IsOpenPpePossessionProcess)
@@ -33,8 +33,7 @@ namespace PpeManager.Api.Application.Commands.OpenNewPpePossessionProcessCommand
             {
                 PpeCertification certification = _ppeRepository.FindCertification(p => p.Id == c.ppeCertificationId);
                 if (certification! == null!) continue;
-                var possession = new PpePossession(certification, date, c.quantity);
-                worker.addPpePossession(possession);
+                worker.AddPossessionRecord(certification, c.quantity);
             }
 
             _notificationContext.AddNotifications(worker.Notifications);
@@ -43,11 +42,11 @@ namespace PpeManager.Api.Application.Commands.OpenNewPpePossessionProcessCommand
                 throw new WorkerDomainException("Worker is invalid");
             }
 
-            _workerRepository.Update(worker);
+            var result = _workerRepository.Update(worker);
 
             await _workerRepository.UnitOfWork.SaveEntitiesAsync();
 
-            return WorkerDTO.FromEntity(worker);
+            return WorkerDTO.FromEntity(result);
         }
     }
 

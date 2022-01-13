@@ -14,7 +14,7 @@
 
         public async Task<WorkerDTO> Handle(ClosePpePossessionProcessCommand request, CancellationToken cancellationToken)
         {
-            var worker = _workerRepository.Find(x => x.Id == request.WorkerId);
+            var worker = _workerRepository.FindWithRecords(x => x.Id == request.WorkerId);
             if (!worker.IsOpenPpePossessionProcess)
             {
                 throw new PpePossessionProcessException("it is impossible to close a non-existent process");
@@ -34,11 +34,13 @@
                     stream.Flush();
                 }
 
+
                 foreach (var p in worker.PpePossessions)
-                {
-                    if (p.Confirmation == false)
+                {                   
+                    var records = p.PossessionRecords?.LastOrDefault() ?? throw new ArgumentNullException(nameof(Ppe));
+                    if (records.Confirmation is false)
                     {
-                        p.confirmation(true, filePath);
+                        records.confirmation(true, filePath);
                     }
                 }
 

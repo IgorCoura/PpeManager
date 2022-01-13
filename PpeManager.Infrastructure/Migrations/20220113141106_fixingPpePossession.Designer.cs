@@ -12,8 +12,8 @@ using PpeManager.Infrastructure;
 namespace PpeManager.Infrastructure.Migrations
 {
     [DbContext(typeof(PpeManagerContext))]
-    [Migration("20220110221516_init")]
-    partial class init
+    [Migration("20220113141106_fixingPpePossession")]
+    partial class fixingPpePossession
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,9 @@ namespace PpeManager.Infrastructure.Migrations
                 .IncrementsBy(10);
 
             modelBuilder.HasSequence("ppeCertificationseq", "ppemanager")
+                .IncrementsBy(10);
+
+            modelBuilder.HasSequence("ppePossessionseq", "ppemanager")
                 .IncrementsBy(10);
 
             modelBuilder.HasSequence("ppeseq", "ppemanager")
@@ -67,6 +70,10 @@ namespace PpeManager.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("NickName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -124,7 +131,7 @@ namespace PpeManager.Infrastructure.Migrations
                     b.ToTable("ppeCertifications", "ppemanager");
                 });
 
-            modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregateWorker.PpePossession", b =>
+            modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregateWorker.PossessionRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,28 +145,59 @@ namespace PpeManager.Infrastructure.Migrations
                     b.Property<DateOnly>("DeliveryDate")
                         .HasColumnType("date");
 
+                    b.Property<string>("FilePath")
+                        .HasColumnType("text");
+
                     b.Property<int?>("PpeCertificationId")
+                        .IsRequired()
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PpePossessionId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
-                    b.Property<string>("SupportingDocument")
-                        .HasColumnType("text");
-
                     b.Property<DateOnly>("Validity")
                         .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PpeCertificationId");
+
+                    b.HasIndex("PpePossessionId");
+
+                    b.ToTable("possessionRecord", "ppemanager");
+                });
+
+            modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregateWorker.PpePossession", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "ppePossessionseq", "ppemanager");
+
+                    b.Property<DateOnly?>("DueDate")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsDelivered")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("PpeId")
+                        .IsRequired()
+                        .HasColumnType("integer");
 
                     b.Property<int?>("WorkerId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PpeCertificationId");
+                    b.HasIndex("PpeId");
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("ppePossession", "ppemanager");
+                    b.ToTable("ppePossessions", "ppemanager");
                 });
 
             modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregateWorker.Worker", b =>
@@ -191,6 +229,9 @@ namespace PpeManager.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("Name");
 
+                    b.Property<int?>("PpePossessionIdNextToTheDueDate")
+                        .HasColumnType("integer");
+
                     b.Property<int>("PpesNotDelivered")
                         .HasColumnType("integer");
 
@@ -209,21 +250,6 @@ namespace PpeManager.Infrastructure.Migrations
                     b.ToTable("workers", "ppemanager");
                 });
 
-            modelBuilder.Entity("PpeWorker", b =>
-                {
-                    b.Property<int>("PpesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("WorkersId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("PpesId", "WorkersId");
-
-                    b.HasIndex("WorkersId");
-
-                    b.ToTable("PpeWorker", "ppemanager");
-                });
-
             modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregatePpe.PpeCertification", b =>
                 {
                     b.HasOne("PpeManager.Domain.AggregatesModel.AggregatePpe.Ppe", "Ppe")
@@ -235,17 +261,36 @@ namespace PpeManager.Infrastructure.Migrations
                     b.Navigation("Ppe");
                 });
 
-            modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregateWorker.PpePossession", b =>
+            modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregateWorker.PossessionRecord", b =>
                 {
                     b.HasOne("PpeManager.Domain.AggregatesModel.AggregatePpe.PpeCertification", "PpeCertification")
                         .WithMany()
-                        .HasForeignKey("PpeCertificationId");
+                        .HasForeignKey("PpeCertificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PpeManager.Domain.AggregatesModel.AggregateWorker.PpePossession", "PpePossession")
+                        .WithMany("PossessionRecords")
+                        .HasForeignKey("PpePossessionId");
+
+                    b.Navigation("PpeCertification");
+
+                    b.Navigation("PpePossession");
+                });
+
+            modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregateWorker.PpePossession", b =>
+                {
+                    b.HasOne("PpeManager.Domain.AggregatesModel.AggregatePpe.Ppe", "Ppe")
+                        .WithMany()
+                        .HasForeignKey("PpeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PpeManager.Domain.AggregatesModel.AggregateWorker.Worker", "Worker")
                         .WithMany("PpePossessions")
                         .HasForeignKey("WorkerId");
 
-                    b.Navigation("PpeCertification");
+                    b.Navigation("Ppe");
 
                     b.Navigation("Worker");
                 });
@@ -261,24 +306,14 @@ namespace PpeManager.Infrastructure.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("PpeWorker", b =>
-                {
-                    b.HasOne("PpeManager.Domain.AggregatesModel.AggregatePpe.Ppe", null)
-                        .WithMany()
-                        .HasForeignKey("PpesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PpeManager.Domain.AggregatesModel.AggregateWorker.Worker", null)
-                        .WithMany()
-                        .HasForeignKey("WorkersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregatePpe.Ppe", b =>
                 {
                     b.Navigation("PpeCertifications");
+                });
+
+            modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregateWorker.PpePossession", b =>
+                {
+                    b.Navigation("PossessionRecords");
                 });
 
             modelBuilder.Entity("PpeManager.Domain.AggregatesModel.AggregateWorker.Worker", b =>

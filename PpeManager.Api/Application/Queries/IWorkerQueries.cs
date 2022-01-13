@@ -2,6 +2,6 @@
 {
     public interface IWorkerQueries
     {
-        public IEnumerable<WorkerDTO> GetAll();
+        public IEnumerable<WorkerDTO> GetByPage(int offset, int limit);
     }
 }

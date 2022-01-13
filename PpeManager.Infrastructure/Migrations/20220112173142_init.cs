@@ -24,6 +24,11 @@ namespace PpeManager.Infrastructure.Migrations
                 incrementBy: 10);
 
             migrationBuilder.CreateSequence(
+                name: "ppePossessionseq",
+                schema: "ppemanager",
+                incrementBy: 10);
+
+            migrationBuilder.CreateSequence(
                 name: "ppeseq",
                 schema: "ppemanager",
                 incrementBy: 10);
@@ -39,6 +44,7 @@ namespace PpeManager.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false),
+                    NickName = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Cnpj = table.Column<string>(type: "text", nullable: false)
                 },
@@ -89,6 +95,7 @@ namespace PpeManager.Infrastructure.Migrations
                     IsOpenPpePossessionProcess = table.Column<bool>(type: "boolean", nullable: false),
                     CompanyId = table.Column<int>(type: "integer", nullable: false),
                     DueDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    PpePossessionIdNextToTheDueDate = table.Column<int>(type: "integer", nullable: true),
                     PpesNotDelivered = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -127,63 +134,78 @@ namespace PpeManager.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PpeWorker",
+                name: "ppePossessions",
                 schema: "ppemanager",
                 columns: table => new
                 {
-                    PpesId = table.Column<int>(type: "integer", nullable: false),
-                    WorkersId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false),
+                    WorkerId = table.Column<int>(type: "integer", nullable: true),
+                    PpeId = table.Column<int>(type: "integer", nullable: false),
+                    IsDelivered = table.Column<bool>(type: "boolean", nullable: false),
+                    DueDate = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PpeWorker", x => new { x.PpesId, x.WorkersId });
+                    table.PrimaryKey("PK_ppePossessions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PpeWorker_ppes_PpesId",
-                        column: x => x.PpesId,
+                        name: "FK_ppePossessions_ppes_PpeId",
+                        column: x => x.PpeId,
                         principalSchema: "ppemanager",
                         principalTable: "ppes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PpeWorker_workers_WorkersId",
-                        column: x => x.WorkersId,
-                        principalSchema: "ppemanager",
-                        principalTable: "workers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ppePossession",
-                schema: "ppemanager",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    WorkerId = table.Column<int>(type: "integer", nullable: true),
-                    PpeCertificationId = table.Column<int>(type: "integer", nullable: true),
-                    DeliveryDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Validity = table.Column<DateOnly>(type: "date", nullable: false),
-                    Confirmation = table.Column<bool>(type: "boolean", nullable: false),
-                    SupportingDocument = table.Column<string>(type: "text", nullable: true),
-                    Quantity = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ppePossession", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ppePossession_ppeCertifications_PpeCertificationId",
-                        column: x => x.PpeCertificationId,
-                        principalSchema: "ppemanager",
-                        principalTable: "ppeCertifications",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ppePossession_workers_WorkerId",
+                        name: "FK_ppePossessions_workers_WorkerId",
                         column: x => x.WorkerId,
                         principalSchema: "ppemanager",
                         principalTable: "workers",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateTable(
+                name: "possessionRecord",
+                schema: "ppemanager",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PpePossessionId = table.Column<int>(type: "integer", nullable: true),
+                    PpeCertificationId = table.Column<int>(type: "integer", nullable: false),
+                    DeliveryDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    Validity = table.Column<DateOnly>(type: "date", nullable: false),
+                    Confirmation = table.Column<bool>(type: "boolean", nullable: false),
+                    FilePath = table.Column<string>(type: "text", nullable: true),
+                    Quantity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_possessionRecord", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_possessionRecord_ppeCertifications_PpeCertificationId",
+                        column: x => x.PpeCertificationId,
+                        principalSchema: "ppemanager",
+                        principalTable: "ppeCertifications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_possessionRecord_ppePossessions_PpePossessionId",
+                        column: x => x.PpePossessionId,
+                        principalSchema: "ppemanager",
+                        principalTable: "ppePossessions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_possessionRecord_PpeCertificationId",
+                schema: "ppemanager",
+                table: "possessionRecord",
+                column: "PpeCertificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_possessionRecord_PpePossessionId",
+                schema: "ppemanager",
+                table: "possessionRecord",
+                column: "PpePossessionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ppeCertifications_PpeId",
@@ -192,22 +214,16 @@ namespace PpeManager.Infrastructure.Migrations
                 column: "PpeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ppePossession_PpeCertificationId",
+                name: "IX_ppePossessions_PpeId",
                 schema: "ppemanager",
-                table: "ppePossession",
-                column: "PpeCertificationId");
+                table: "ppePossessions",
+                column: "PpeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ppePossession_WorkerId",
+                name: "IX_ppePossessions_WorkerId",
                 schema: "ppemanager",
-                table: "ppePossession",
+                table: "ppePossessions",
                 column: "WorkerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PpeWorker_WorkersId",
-                schema: "ppemanager",
-                table: "PpeWorker",
-                column: "WorkersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_workers_CompanyId",
@@ -219,11 +235,7 @@ namespace PpeManager.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ppePossession",
-                schema: "ppemanager");
-
-            migrationBuilder.DropTable(
-                name: "PpeWorker",
+                name: "possessionRecord",
                 schema: "ppemanager");
 
             migrationBuilder.DropTable(
@@ -235,11 +247,15 @@ namespace PpeManager.Infrastructure.Migrations
                 schema: "ppemanager");
 
             migrationBuilder.DropTable(
-                name: "workers",
+                name: "ppePossessions",
                 schema: "ppemanager");
 
             migrationBuilder.DropTable(
                 name: "ppes",
+                schema: "ppemanager");
+
+            migrationBuilder.DropTable(
+                name: "workers",
                 schema: "ppemanager");
 
             migrationBuilder.DropTable(
@@ -252,6 +268,10 @@ namespace PpeManager.Infrastructure.Migrations
 
             migrationBuilder.DropSequence(
                 name: "ppeCertificationseq",
+                schema: "ppemanager");
+
+            migrationBuilder.DropSequence(
+                name: "ppePossessionseq",
                 schema: "ppemanager");
 
             migrationBuilder.DropSequence(

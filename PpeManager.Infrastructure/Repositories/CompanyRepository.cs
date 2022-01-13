@@ -31,10 +31,8 @@ namespace PpeManager.Infrastructure.Repositories
 
         public Company Find(Func<Company, bool> p)
         {
-            var entity = _context.Company.Where(p).SingleOrDefault();
-#pragma warning disable CS8603 // Possível retorno de referência nula.
+            var entity = _context.Company.Where(p).SingleOrDefault() ?? throw new ArgumentNullException(nameof(Company));
             return entity;
-#pragma warning restore CS8603 // Possível retorno de referência nula.
         }
 
         public IEnumerable<Company> FindAll(Func<Company, bool> p)

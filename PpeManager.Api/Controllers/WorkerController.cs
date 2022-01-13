@@ -20,11 +20,11 @@ namespace PpeManager.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int offset = 0, int limit = 10)
         {
             try
             {
-                var result = _workerQueries.GetAll();
+                var result = _workerQueries.GetByPage(offset,limit);
                 return Ok(result);
             }
             catch (Exception ex)

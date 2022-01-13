@@ -22,9 +22,9 @@ namespace PpeManager.UnitTests.Application.Commands
         public async Task Handler_return_companyDto_if_company_is_persisted()
         {
             //Arrange
-            var fakeCommand = new CreateCompanyCommand("fakeCommand", "02624917000192");
-            var entity = new Company(fakeCommand.Name, fakeCommand.Cnpj);
-            var expectedResult = new CompanyDTO(0, entity.Name.ToString(), entity.Cnpj.ToString());
+            var fakeCommand = new CreateCompanyCommand("fakeNick","fakeCommand", "02624917000192");
+            var entity = new Company(fakeCommand.NickName, fakeCommand.Name, fakeCommand.Cnpj);
+            var expectedResult = new CompanyDTO(0, entity.NickName.ToString(), entity.Name.ToString(), entity.Cnpj.ToString());
 
             _companyRepositoryMock.Setup(repo => repo.Add(It.IsAny<Company>())).Returns(entity);
             _companyRepositoryMock.Setup(repo => repo.UnitOfWork.SaveEntitiesAsync(It.IsAny<CancellationToken>()));
@@ -42,7 +42,7 @@ namespace PpeManager.UnitTests.Application.Commands
         public async Task Hadler_return_CompanyDomainException_if_company_is_invalid()
         {
             //Arrange
-            var fakeCommand = new CreateCompanyCommand("", "");
+            var fakeCommand = new CreateCompanyCommand("","", "");
 
 
             //Act

@@ -15,7 +15,7 @@ namespace PpeManager.Api.Application.Commands.CreateCompanyCommand
 
         public async Task<CompanyDTO> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
         {
-            var entity = new Company(request.Name, request.Cnpj);
+            var entity = new Company(request.NickName, request.Name, request.Cnpj);
             _notificationContext.AddNotifications(entity.Notifications);
             if (!_notificationContext.IsValid)
             {

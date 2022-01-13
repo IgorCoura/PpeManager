@@ -28,7 +28,9 @@ namespace PpeManager.Infrastructure.EntityConfigurations
 
             builder.HasOne(x => x.Ppe)
                 .WithMany(x => x.PpeCertifications)
-                .HasForeignKey(x => x.PpeId);
+                .HasForeignKey(x => x.PpeId)
+                .IsRequired();
+
         }
     }
 }
